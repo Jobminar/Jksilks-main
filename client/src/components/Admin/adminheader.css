@@ -1,0 +1,17 @@
+.admin-header{
+    /* border: 1px solid black; */
+    height: 5rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 2rem;
+}
+.nav-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 2rem;
+    padding-top: 1rem;
+}
+.nav-section p:hover{
+    cursor: pointer;
+}

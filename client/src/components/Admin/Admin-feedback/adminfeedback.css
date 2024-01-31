@@ -1,0 +1,65 @@
+.adminfeedback{
+    /* border: 1px solid black; */
+}
+.adminfeedback h1{
+    font-family: Saira;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 3rem 4rem;
+
+}
+.feedback-con{
+    padding: 0rem 4rem;
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: 25% 75%;
+}
+.products-feedback{
+    /* border: 1px solid black; */
+    
+}
+.products-feedback p{
+    font-family: Saira;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 1rem;
+
+}
+.products-feedback img{
+    width: 15rem;
+    height: 20rem;
+}
+.reviews-feedback{
+    display: flex;
+    flex-direction: column;
+}
+.reviews-feedback p{
+    font-family: Saira;
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding: 1rem;
+
+}
+.review-msg{
+    /* border: 1px solid black; */
+ 
+    font-family: Saira;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    margin: 2rem;
+    padding: 2rem 4rem;
+    box-shadow: 0px 2.2593090534210205px 2.2593090534210205px 0px rgba(0, 0, 0, 0.25);
+   background-color: rgba(246, 246, 246, 1);
+}

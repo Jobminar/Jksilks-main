@@ -1,0 +1,35 @@
+/* Favourites.css */
+
+.heart-icon {
+  margin-right: 50px;
+  transition: color 0.3s, border-color 0.3s, margin-right 0.3s; /* Include margin-right in the transition */
+  cursor: pointer;
+}
+
+.heart-icon.filled {
+  color: pink; /* Change color to pink when filled */
+}
+
+.heart-icon:hover {
+  transform: scale(1.2); /* Add a scale effect on hover */
+}
+
+.wiggle {
+  animation: wiggle-animation 0.5s ease-in-out;
+}
+
+@keyframes wiggle-animation {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}

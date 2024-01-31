@@ -1,0 +1,156 @@
+.footer-con{
+    /* margin: 1rem 2rem; */
+    /* border: 1px solid green; */
+}
+.footer-sub-con{
+    padding: 1rem 4rem;
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: 23% 23% 23% 31%;
+    justify-content: space-around;
+    background-color:  rgba(244, 216, 118, 1);
+
+}
+.footer-con div h1{
+    font-family: Saira;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 71, 8, 1);
+
+}
+.quicklinks div{
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 71, 8, 1);
+   
+    
+
+}
+.policies{
+    display: flex;
+    flex-direction: column;
+}
+.policies a{
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 71, 8, 1);
+
+}
+.letushelp{
+    display: flex;
+    flex-direction: column;
+}
+.letushelp a{
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 71, 8, 1);
+
+}
+.newsletter{
+    display: flex;
+    flex-direction: column;
+}
+.newsletter  a{
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 35px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(159, 71, 8, 1);
+
+}
+.newsletter input{
+    width: 15rem;
+    height: 2rem;
+}
+
+
+@media screen and (min-width: 360px) and (max-width: 600px){
+    .footer-con{
+        /* margin: 1rem 2rem; */
+        border: 1px solid green;
+    }
+    .footer-sub-con{
+        padding: 1rem 4rem;
+        display: grid;
+        grid-template-columns: 100%;
+        justify-content: left;
+        background-color:  rgba(244, 216, 118, 1);
+        row-gap: 2rem;
+    
+    }
+    .quicklinks div{
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 35px;
+        letter-spacing: 0em;
+        text-align: left;
+        /* color: rgba(159, 71, 8, 1); */
+    }
+    .policies{
+        display: flex;
+        flex-direction: column;
+    }
+    .policies a{
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 35px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(159, 71, 8, 1);
+    
+    }
+    .letushelp{
+        display: flex;
+        flex-direction: column;
+    }
+    .letushelp a{
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 35px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(159, 71, 8, 1);
+    
+    }
+    .newsletter{
+        display: flex;
+        flex-direction: column;
+    }
+    .newsletter  a{
+        font-family: Roboto;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 35px;
+        letter-spacing: 0em;
+        text-align: left;
+        color: rgba(159, 71, 8, 1);
+    
+    }
+    .newsletter input{
+        width: 15rem;
+        height: 2rem;
+        border: 1px solid rgba(159, 71, 8, 1);
+        color: rgba(159, 71, 8, 1);
+    }
+   
+}
