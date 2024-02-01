@@ -15,5 +15,8 @@
     letter-spacing: 0em;
     text-align: left;
     color: black;
-
+    margin-top: 1rem
+}
+.navbar-con p:hover{
+    cursor: pointer;
 }

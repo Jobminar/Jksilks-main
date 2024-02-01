@@ -21,11 +21,12 @@ import Adminfeedback from "./components/Admin/Admin-feedback/adminfeedback";
 import Inventory from "./components/Admin/Admin-inventory/admininventory";
 import Product from "./components/Admin/Products/Product";
 import ProductUpdate from "./components/Admin/Products/tabs/productupdate";
+import Productview from "./components/Sares/Productview/productview";
 function App() {
   return (
     <>
       <BrowserRouter>
-     {/* <Navbar /> */}
+     <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -34,6 +35,7 @@ function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/favourite" element={<Favourites />} />
           <Route path="/addtocart" element={<AddTocart />} />
+          <Route path="/productview" element={<Productview />} />
           <Route path="/semikanchipattu" element={<Semikanchipattu />} />
           <Route path="/lightweightpattu" element={<Lightweightpattu />} />
           <Route path="/softsilk" element={<Softsilk />} />
@@ -48,6 +50,7 @@ function App() {
           <Route path="/adminproduct" element={<Adminproduct />} />
           <Route path="/adminfeedback" element={<Adminfeedback />} />
           <Route path="/product" element={<Product />} />
+         
           <Route path="/productupdate" element={<ProductUpdate/>}/>
         </Routes>
         {/* <Footer /> */}

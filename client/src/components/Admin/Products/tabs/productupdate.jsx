@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { TextField, DialogActions, Button, MenuItem } from "@mui/material";
+import { TextField, DialogActions, Button, MenuItem, FormControl, Select } from "@mui/material";
+import InputLabel from '@mui/material/InputLabel';
+
 import axios from "axios";
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import './tabs.css'
+import './tabs.css';
 
 const ProductUpdate = () => {
   const navigate = useNavigate();
@@ -52,11 +52,11 @@ const ProductUpdate = () => {
     setEditFormData({ ...editformData, [fieldName]: value });
   };
 
-  const handleImageChange = async (e) => {
+  const handleImageChange = async (e, fieldName) => {
     const file = e.target.files[0];
     if (file) {
       const base64Image = await convertToBase64(file);
-      setEditFormData({ ...editformData, itemImage: base64Image });
+      setEditFormData({ ...editformData, [fieldName]: base64Image });
     }
   };
 
@@ -68,89 +68,102 @@ const ProductUpdate = () => {
       reader.readAsDataURL(file);
     });
 
-  // const handleFieldUpdate = async (fieldName, value) => {
-  //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:3000/updateItem/${selectedProduct._id}`,
-  //       {
-  //         [fieldName]: value,
-  //       },
-  //       {
-  //         headers: { "Content-Type": "application/json" },
-  //       }
-  //     );
-
-  //     if (response.status === 200) {
-  //       alert(`${fieldName} updated successfully`);
-  //     } else {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error updating ${fieldName}:`, error);
-  //     alert(`Error updating ${fieldName} in inventory`);
-  //   }
-  // };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.put(
-        `https://jk-skills.onrender.com//inventory/${selectedProduct._id}`,
-        {
-          category: editformData.category,
-          itemname: editformData.itemname,
-          price: editformData.price ,
-          code: editformData.code ,
-          stitchingOptions: editformData.stitchingOptions ,
-          fabric: editformData.fabric ,
-          washCare: editformData.washCare ,
-          length: editformData.length ,
-          description: editformData.description ,
-          itemImage1: editformData.itemImage1,
-          itemImage2: editformData.itemImage2 ,
-          itemImage3: editformData.itemImage3,
-          itemImage4: editformData.itemImage4,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
+    const handleFieldUpdate = async (fieldName, value) => {
+      try {
+        const response = await axios.put(
+          `https://jk-skills.onrender.com/inventory/${selectedProduct._id}`,
+          {
+            [fieldName]: value,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+  
+        if (response.status === 200) {
+          alert(`${fieldName} updated successfully`);
+        } else {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      );
-
-      if (response.status === 200) alert("Item updated successfully");
-      else throw new Error(`HTTP error! Status: ${response.status}`);
-    } catch (error) {
-      // console.log('Before updating item:', editformData);
-      console.error("Error updating item:", error);
-      // console.log('After updating item:', editformData);
-      alert("Error updating item in inventory");
-      console.log(editformData)
-    }
-  };
-
+      } catch (error) {
+        console.error(`Error updating ${fieldName}:`, error);
+        alert(`Error updating ${fieldName} in inventory`);
+      }
+    };
+    
+    const handleSubmit = async () => {
+      try {
+        const response = await axios.put(
+          `https://jk-skills.onrender.com/inventory/${selectedProduct._id}`,
+          {
+            category: editformData.category,
+            itemname: editformData.itemname,
+            price: editformData.price,
+            code: editformData.code,
+            stitchingOptions: editformData.stitchingOptions,
+            fabric: editformData.fabric,
+            washCare: editformData.washCare,
+            length: editformData.length,
+            description: editformData.description,
+            // itemImage1: editformData.itemImage1,
+            // itemImage2: editformData.itemImage2,
+            // itemImage3: editformData.itemImage3,
+            // itemImage4: editformData.itemImage4,
+            
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+    
+        if (response.status === 200) {
+          alert("Item updated successfully");
+        } else {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Error updating item:", error);
+        alert("Error updating item in inventory");
+      }
+    };
+    
+    
   return (
     <div className="updated-form-con">
+      {/* <ul>
+        {Object.entries(selectedProduct).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key}:</strong> {value}
+          </li>
+        ))}
+      </ul> */}
       <div>
       <FormControl variant="standard" sx={{ m: 0, minWidth: '85%' }}>
-         
-          <Select
-            labelId="category-label"
-            id="category"
-            required
-            name='category'
-            value={editformData.category}
-            onChange={(e) => handleChange(e)}
-            label="Category"
-            sx={{ background: 'transparent' }}
-          >
-            <MenuItem value="semiKanchiPattu">Semi kanchi pattu</MenuItem>
-            <MenuItem value="lightWeightPattu">Light weight pattu</MenuItem>
-            <MenuItem value="softSilk">Soft silk</MenuItem>
-            <MenuItem value="pureKanchiPattu">Pure kanchi pattu</MenuItem>
-            <MenuItem value="pureKanjivaramSilk">Pure kanjivaram silk</MenuItem>
-            <MenuItem value="exclusiveBridalWear">Exclusive Bridal wear</MenuItem>
-            <MenuItem value="offerZone">Offer zone</MenuItem>
-            
-          </Select>
-        </FormControl>
+        <InputLabel id="category-label">Category</InputLabel>
+        <Select
+          labelId="category-label"
+          id="category"
+          required
+          name='category'
+          value={editformData.category}
+          onChange={(e) => handleChange(e, 'category')}  
+          label="Category"
+          sx={{ background: 'transparent' }}
+        >
+          <MenuItem value="semiKanchiPattu">Semi kanchi pattu</MenuItem>
+          <MenuItem value="lightWeightPattu">Lightweight pattu</MenuItem>
+          <MenuItem value="softSilk">Soft silk</MenuItem>
+          <MenuItem value="pureKanchiPattu">Pure kanchi pattu</MenuItem>
+          <MenuItem value="pureKanjivaramSilk">Pure kanjivaram silk</MenuItem>
+          <MenuItem value="exclusiveBridalWear">Exclusive Bridal wear</MenuItem>
+          <MenuItem value="offerZone">Offer zone</MenuItem>
+        </Select>
+      </FormControl>
+        {/* <Button
+          onClick={() => handleFieldUpdate("category", editformData.category)}
+        >
+          Update Category
+        </Button> */}
       </div>
 
       <div>
@@ -165,6 +178,11 @@ const ProductUpdate = () => {
           value={editformData.itemname}
           onChange={(e) => handleChange(e, "itemname")}
         />
+       {/* <Button
+          onClick={() => handleFieldUpdate("category", editformData.itemname)}
+        >
+          Update name
+        </Button> */}
       </div>
 
       <div>
@@ -179,6 +197,7 @@ const ProductUpdate = () => {
           value={editformData.price}
           onChange={(e) => handleChange(e, "price")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("price")}>Update Price</Button> */}
       </div>
 
       <div>
@@ -193,6 +212,7 @@ const ProductUpdate = () => {
           value={editformData.code}
           onChange={(e) => handleChange(e, "code")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("code")}>Update Code</Button> */}
       </div>
 
       <div>
@@ -207,6 +227,7 @@ const ProductUpdate = () => {
           value={editformData.stitchingOptions}
           onChange={(e) => handleChange(e, "stitchingOptions")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("stitchingOptions")}>Update Stitching Options</Button> */}
       </div>
 
       <div>
@@ -221,6 +242,7 @@ const ProductUpdate = () => {
           value={editformData.fabric}
           onChange={(e) => handleChange(e, "fabric")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("fabric")}>Update Fabric</Button> */}
       </div>
 
       <div>
@@ -235,6 +257,7 @@ const ProductUpdate = () => {
           value={editformData.washCare}
           onChange={(e) => handleChange(e, "washCare")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("washCare")}>Update Wash Care</Button> */}
       </div>
 
       <div>
@@ -249,6 +272,7 @@ const ProductUpdate = () => {
           value={editformData.length}
           onChange={(e) => handleChange(e, "length")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("length")}>Update Length</Button> */}
       </div>
 
       <div>
@@ -263,69 +287,66 @@ const ProductUpdate = () => {
           value={editformData.description}
           onChange={(e) => handleChange(e, "description")}
         />
+        {/* <Button onClick={() => handleFieldUpdate("description")}>Update Description</Button> */}
       </div>
 
       <div className="main-img-con">
         <div className="sub-img-con">
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, "itemImage1")} />
           {editformData.itemImage1 && (
             <div>
-            {editformData.itemImage1 && (
               <img
-              src={`data:image/png;base64, ${editformData.itemImage1}`}
-
+                src={`data:image/png;base64, ${editformData.itemImage1}`}
                 alt={`Item ${editformData.itemname}`}
               />
-            )}
-          </div>
+            </div>
           )}
+          <Button onClick={() => handleFieldUpdate("itemImage1")}>Update Image 1</Button>
         </div>
-        <div className="sub-img-con"> 
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+
+        <div className="sub-img-con">
+          <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, "itemImage2")} />
           {editformData.itemImage2 && (
             <div>
-            {editformData.itemImage2 && (
               <img
-              src={`data:image/png;base64, ${editformData.itemImage2}`}
-
+                src={`data:image/png;base64, ${editformData.itemImage2}`}
                 alt={`Item ${editformData.itemname}`}
               />
-            )}
-          </div>
+            </div>
           )}
+          <Button onClick={() => handleFieldUpdate("itemImage2")}>Update Image 2</Button>
         </div>
+
         <div className="sub-img-con">
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, "itemImage3")} />
           {editformData.itemImage3 && (
             <div>
-            {editformData.itemImage3 && (
               <img
-              src={`data:image/png;base64, ${editformData.itemImage3}`}
-
+                src={`data:image/png;base64, ${editformData.itemImage3}`}
                 alt={`Item ${editformData.itemname}`}
               />
-            )}
-          </div>
+            </div>
           )}
+          <Button onClick={() => handleFieldUpdate("itemImage3")}>Update Image 3</Button>
         </div>
-        <div className="sub-img-con">
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-          <div>
-            {editformData.itemImage4 && (
-              <img
-              src={`data:image/png;base64, ${editformData.itemImage4}`}
 
+        <div className="sub-img-con">
+          <input type="file" accept="image/*" onChange={(e) => handleImageChange(e, "itemImage4")} />
+          {editformData.itemImage4 && (
+            <div>
+              <img
+                src={`data:image/png;base64, ${editformData.itemImage4}`}
                 alt={`Item ${editformData.itemname}`}
               />
-            )}
-          </div>
-          
+            </div>
+          )}
+          <Button onClick={() => handleFieldUpdate("itemImage4")}>Update Image 4</Button>
         </div>
       </div>
-      
+
       <DialogActions className="formbuttons">
         <Button onClick={() => navigate(-1)}>Close</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit}>Update Item</Button>
       </DialogActions>
     </div>
   );
