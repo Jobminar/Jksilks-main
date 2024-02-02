@@ -8,16 +8,11 @@ const Lightweightpattu = () => {
 
   useEffect(() => {
     const apiUrl = 'https://jk-skills.onrender.com/inventory';
-
-    fetch(apiUrl)
+  
+    axios.get(apiUrl)
       .then(response => {
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        // Filter items with category "freshVegetables"
+        const data = response.data;
+        console.log(data)
         const freshVegetables = data.items.filter(item => item.category === 'lightWeightPattu');
         setInventoryData(freshVegetables);
       })
@@ -25,7 +20,6 @@ const Lightweightpattu = () => {
         console.error('Error fetching data:', error);
       });
   }, []);
- 
   //  data send
 
   const [selectedProduct,setSelectedProduct]=useState('');
