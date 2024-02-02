@@ -17,6 +17,8 @@ const Semikanchi = () => {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         return response.json();
+        console.log(response)
+        
       })
       .then(data => {
         // Filter items with category "freshVegetables"

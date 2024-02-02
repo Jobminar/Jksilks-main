@@ -1,201 +1,121 @@
-import React from "react";
-import { AiFillCloseCircle } from "react-icons/ai";
-export default function ShoppingCart() {
-  const customFontStyle = {
-    fontFamily: "Sail",
-    fontSize: "3.5rem", // Adjust the font size as needed
-    color: "#ce0011",
-    /* Add other styles if needed */
+// import React, { useState } from 'react';
+// import { useLocation, useNavigate } from 'react-router-dom';
+
+// const ShoppingCart = () => {
+//   // Data receive
+//   const navigate = useNavigate();
+//   const location = useLocation();
+//   const cartProduct = location.state?.cartProduct || null;
+
+
+//   const handleDeleteItem = (itemId) => {
+//     // Remove the item with the given itemId from the cartProducts array
+//     const updatedCartProducts = cartProducts.filter(item => item.id !== itemId);
+//     // Update the location state or perform any other action as needed
+//     navigate('/', { state: { cartProducts: updatedCartProducts } });
+//   };
+
+//   return (
+//     <div className='ShoppingCart-con'>
+
+         
+//            <p>Inventory Data</p>
+//          <pre>{JSON.stringify(cartProduct, null, 2)}</pre>
+//       <h2>Your Shopping Cart</h2>
+    
+       
+     
+//     </div>
+//   );
+// };
+
+// export default ShoppingCart;
+
+
+// // import React, { useState, useEffect } from 'react';
+// // import { useLocation } from 'react-router-dom';
+
+// // const ShoppingCart = () => {
+// //   const location = useLocation();
+// //   const cartProduct = location.state?.cartProduct || null;
+  
+// //   useEffect(() => {
+// //     console.log("cartProducts data:", cartProduct);
+// //   }, [cartProduct]);
+
+// //   return (
+// //     <div className='ShoppingCart-con'>
+// //       <h2>Your Shopping Cart</h2>
+   
+// //         <ul>
+// //           {cartProduct.map((item) => (
+// //             <li key={item.id}>
+// //               <div>
+// //                 <p>{item.itemname}</p>
+// //                 <p>{item.price}</p>
+// //               </div>
+// //             </li>
+// //           ))}
+// //         </ul>
+      
+// //         <p>Your cart is empty.</p>
+   
+// //     </div>
+// //   );
+// // };
+
+// // export default ShoppingCart;
+
+
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import './shoppingcart.css'
+
+const ShoppingCart = () => {
+  // Data receive
+  const navigate = useNavigate();
+  const location = useLocation();
+  const initialCartProduct = location.state?.cartProduct || null;
+  const [cartProducts, setCartProducts] = useState([]);
+
+  useEffect(() => {
+    if (initialCartProduct) {
+      setCartProducts([initialCartProduct]);
+    }
+  }, [initialCartProduct]);
+
+  const handleDeleteItem = (itemId) => {
+    // Remove the item with the given itemId from the cartProducts array
+    const updatedCartProducts = cartProducts.filter(item => item.id !== itemId);
+    // Update the cartProducts state
+    setCartProducts(updatedCartProducts);
+    // You can also update the location state if needed
+    navigate('/', { state: { cartProducts: updatedCartProducts } });
   };
+
   return (
-    <div className="container bg-white pt-6">
-      <div className="col-12 col-md-4 d-flex align-items-center">
-        <div style={customFontStyle} className="mr-3">
-          Shopping Cart
-        </div>
-        <div className="flex-grow-1"></div>
-        <img
-          src="https://file.rendit.io/n/BSUK5YAUwhbI8qtVYWdB.svg"
-          alt="ActionShoppingBag icon"
-          className="mt-2 w-12 ml-3" // Add ml-3 to add margin between text and icon
-        />
-      </div>
+    <>
+     <div className='ShoppingCart-con'>
+         <div className='ShoppingCart-main-con'>
+              {cartProducts.map((item) => (
+              <div key={item.id}>
+                <p>{item.itemname}</p>
+                <p>{item.price}</p>
+                <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+              </div>
+            ))}
+         </div>
+  
+   
+     
 
-      <div className="row mt-5">
-        <div className="col-12">
-          <div className="mb-3">
-            <div className="d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <img
-                  src="https://file.rendit.io/n/8IoRxsP8efY8UqJseecN.png"
-                  alt="Frame3"
-                  className="w-50 rounded" // Set the width of the image and add rounded corners
-                />
-                <div className="d-flex flex-column ml-3">
-                  <div
-                    className="text-lg fw-bold mb-1"
-                    style={{ color: "#333" }}
-                  >
-                    Product
-                  </div>
-                  <div className="text-xl" style={{ color: "#666" }}>
-                    Bridal wear
-                  </div>
-                </div>
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                <div className="text-lg fw-bold mt-3">Quantity</div>
-                <div className="input-group">
-                  <button
-                    className="btn btn-outline-secondary btn-sm"
-                    type="button"
-                    style={{ width: "30px" }} // Adjust the width as needed
-                  >
-                    -
-                  </button>
-                  <input
-                    type="text"
-                    className="form-control text-center"
-                    value="1"
-                    readOnly
-                    style={{ width: "40px" }} // Adjust the width as needed
-                  />
-                  <button
-                    className="btn btn-outline-secondary btn-sm"
-                    type="button"
-                    style={{ width: "30px" }} // Adjust the width as needed
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div className="d-flex flex-column">
-                <div className="text-lg fw-bold mt-3">Price</div>
-                <div id="Element1" className="text-xl">
-                  ₹ 2599.00{" "}
-                </div>
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                <div className="text-lg fw-bold mt-3">Actions</div>
-                <div>
-                  <AiFillCloseCircle
-                    size={24} // Adjust the size as needed
-                    className="cursor-pointer"
-                    style={{ color: "red" }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <hr className="danger" />
-
-      <div className="row mt-3">
-        <div className="col-12">
-          <div className="mb-3">
-            <div className="d-flex justify-content-between">
-              <div className="d-flex align-items-center">
-                <img
-                  src="https://file.rendit.io/n/ma4QGxp4s7k1rfz0ghct.png"
-                  alt="Frame3"
-                  className="w-50 rounded" // Set the width of the image and add rounded corners
-                />
-                <div className="d-flex flex-column ml-3">
-                  <div
-                    className="text-lg fw-bold mb-1"
-                    style={{ color: "#333" }}
-                  >
-                    Product
-                  </div>
-                  <div className="text-xl" style={{ color: "#666" }}>
-                    Bridal wear
-                  </div>
-                </div>
-              </div>
-
-              <div className="d-flex flex-column align-items-center">
-                <div className="text-lg fw-bold mt-3">Quantity</div>
-                <div className="input-group">
-                  <button
-                    className="btn btn-outline-secondary btn-sm"
-                    type="button"
-                    style={{ width: "30px" }} // Adjust the width as needed
-                  >
-                    -
-                  </button>
-                  <input
-                    type="text"
-                    className="form-control text-center"
-                    value="1"
-                    readOnly
-                    style={{ width: "40px" }} // Adjust the width as needed
-                  />
-                  <button
-                    className="btn btn-outline-secondary btn-sm"
-                    type="button"
-                    style={{ width: "30px" }} // Adjust the width as needed
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-              <div className="d-flex flex-column">
-                <div className="text-lg fw-bold mt-3">Price</div>
-                <div id="Element2" className="text-xl">
-                  ₹ 2599.00{" "}
-                </div>
-              </div>
-              <div className="d-flex flex-column align-items-center">
-                <div className="text-lg fw-bold mt-3">Actions</div>
-                <div>
-                  <AiFillCloseCircle
-                    size={24} // Adjust the size as needed
-                    className="cursor-pointer"
-                    style={{ color: "red" }}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <hr className="danger" />
-
-      {/* Continue Shopping and Total Cost & Checkout */}
-      <div className="row mt-4 mb-4">
-        {/* Continue Shopping and Total Cost & Checkout */}
-        <div className="col-12 d-flex justify-content-center">
-          <div className="mb-2">
-            <div className="d-flex justify-content-between">
-              <div className="text-lg fw-medium"></div>
-              <div className="text-lg fw-bold" style={{ marginLeft: "600px" }}>
-                Total: ₹ 5198.00
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr className="danger" />
-        {/* Continue Shopping and Checkout */}
-        <div className="col-12">
-          <div className="mb-3">
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="d-flex flex-column">
-                <div className="text-lg fw-medium pr-3">Continue Shopping</div>
-              </div>
-              <div className="d-flex flex-row">
-                <div className="text-lg fw-bold"></div>
-                <button className="btn btn-warning ml-3">
-                  Proceed to Checkout
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p>Inventory Data</p>
+      <pre>{JSON.stringify(cartProducts, null, 2)}</pre>
+      <h2>Your Shopping Cart</h2>
     </div>
+    </>
+   
   );
-}
+};
+
+export default ShoppingCart;
