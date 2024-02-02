@@ -64,6 +64,8 @@ const Productview = () => {
             alert(`Successfully added ${quantity} items to the cart!`);
           })
           .catch(error => {
+            alert(`error added items to the cart!`);
+
             // Handle error (e.g., show an error message)
             console.error('Error adding items to the cart:', error);
           });
