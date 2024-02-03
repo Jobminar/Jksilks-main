@@ -44,7 +44,7 @@ export default function Login() {
         console.log("Login successful");
         navigate('/')
         // Optionally, you can redirect the user to another page after successful login
-        // For example, navigate("/dashboard");
+        navigate("/");
       } else {
         // Handle errors for unsuccessful requests
         const data = await response.json();
