@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from 'axios';
 
 const Productview = () => {
@@ -37,10 +38,19 @@ const Productview = () => {
    
 
     const Buynowamount = parseInt(selectedProduct.price) * quantity
-
+      
     // data send to backend
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    console.log(user);
+    const userId = user && user.user._id;
+   
 
+   console.log(`id ${userId}`)
     const handleAddToCart = () => {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      console.log(user);
+      const userId = user && user.user._id;
+     
         const dataToSend = {
           category: selectedProduct.category || null,
           itemname: selectedProduct.itemname ||  null,
@@ -55,12 +65,15 @@ const Productview = () => {
           // itemImage2: 'exampleImage2Base64',
           // itemImage3: 'exampleImage3Base64',
           // itemImage4: 'exampleImage4Base64',
+          userId:userId,
+          quantity : quantity,
         };
     
         // Make a POST request to your backend API
         axios.post('https://jk-skills.onrender.com/add-to-cart', dataToSend)
           .then(response => {
             // Handle success (e.g., show a success message)
+            
             alert(`Successfully added ${quantity} items to the cart!`);
           })
           .catch(error => {
@@ -71,7 +84,12 @@ const Productview = () => {
           });
       };
     
+      const [isFavorite, setIsFavorite] = useState(false);
 
+      const handlefavorite = () => {
+        // Toggle the state when the icon is clicked
+        setIsFavorite(prevState => !prevState);
+      };
 
     
 
@@ -82,6 +100,7 @@ const Productview = () => {
       <div className='productview-con'>
          <div className='productview-main-con'>
             <div className='productview-main-img-con'>
+              
                 <div className='main-img-con'>
                 <img src={`data:image/png;base64, ${selectedProduct.itemImage1}`} alt={`Item ${selectedProduct.itemname}`} />
                 </div>
@@ -99,8 +118,12 @@ const Productview = () => {
             </div>
             <div className='productview-main-details-con'>
                 <div className='details'>
-                  <div>
+                  <div className='title-fav-section'>
                      <h2>{selectedProduct.itemname}</h2>
+                     <div>
+                        <FavoriteIcon onClick={handlefavorite} style={{ color: isFavorite ? 'red' : 'black' }} />
+                      </div>
+
                   </div>
                   <p className='details-price'>&#8377;    {selectedProduct.price}<br/><span>Inclusive all taxes</span></p>
                   <p>Type : {selectedProduct.category}</p>
@@ -110,6 +133,7 @@ const Productview = () => {
                   <p>Washcare : {selectedProduct.washCare}</p>
                   <p>Length : {selectedProduct.length} mtr</p>
                   <p>Description : {selectedProduct.description}</p>
+                  {/* <h1>id :{userId}</h1> */}
                   <div className='quantity-section'>Quantity :  
                   <div className='quantity-sub-section'>
                     <button onClick={handleDecrease}>-</button>
@@ -122,7 +146,7 @@ const Productview = () => {
                     <button onClick={handleAddToCart} >Add to Cart</button>
                   </div>
                 </div>
-                
+              
                  
             </div>
          </div>

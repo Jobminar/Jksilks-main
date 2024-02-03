@@ -40,8 +40,9 @@ export default function Login() {
 
         // Set user object in session storage
         sessionStorage.setItem("user", JSON.stringify(user));
-
+        
         console.log("Login successful");
+        navigate('/')
         // Optionally, you can redirect the user to another page after successful login
         // For example, navigate("/dashboard");
       } else {

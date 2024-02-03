@@ -20,3 +20,6 @@
 .navbar-con p:hover{
     cursor: pointer;
 }
+.navbar-con img:hover{
+    cursor: pointer;
+}

@@ -28,7 +28,7 @@ const Navbar = () => {
   };
 
   const handleProfileClick = () => {
-    navigate("/account");
+    navigate("/login");
   };
 
   return (
