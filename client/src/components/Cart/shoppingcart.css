@@ -35,7 +35,17 @@
 .delete-icon:hover{
     cursor: pointer;
 }
-.totalamount{
-    text-align: right;
-    float: right;
+
+.checkout-amount{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    align-items: center;
+}
+.checkout-button button{
+    width: 15rem;
+    height: 3rem;
+}
+.checkout-button:hover{
+    cursor: pointer;
 }

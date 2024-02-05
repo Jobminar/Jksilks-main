@@ -1,119 +1,96 @@
-import React, { useState } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import heartImg from "../../assets/heart.png"; // Assuming 'heart.png' is the path to your heart image
-import "./Favourites.css";
+import React, { useState, useEffect } from 'react';
+import './Favourites.css'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import axios from 'axios';
 
-const Favourites = () => {
-  // State to keep track of favorite items
-  const [favorites, setFavorites] = useState([]);
+const Favorites = () => {
+  const [favoritesData, setFavoritesData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // State to trigger animation
-  const [wiggle, setWiggle] = useState(false);
+  useEffect(() => {
+    // Fetch user from sessionStorage
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user && user.user._id;
 
-  // Function to handle clicking on the favorite icon
-  const customFontStyle = {
-    fontFamily: "Sail",
-    fontSize: "4.5rem", // Adjust the font size as needed
-    color: "#ce0011",
-    /* Add other styles if needed */
-  };
+    // Check if userId is available    
+    if (userId) {
+      const apiUrl = `https://jk-skills.onrender.com/wishlist/${userId}`;
 
-  const handleFavoriteClick = (id) => {
-    // Trigger the wiggle animation
-    setWiggle(true);
-
-    setTimeout(() => {
-      // Reset the wiggle animation after a delay
-      setWiggle(false);
-    }, 1000); // Adjust the delay as needed
-
-    if (favorites.includes(id)) {
-      // Remove from favorites
-      setFavorites(favorites.filter((favId) => favId !== id));
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          setFavoritesData(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching wishlist data:', error);
+          setLoading(false);
+        });
     } else {
-      // Add to favorites
-      setFavorites([...favorites, id]);
+      console.error('User ID not available.');
+      setLoading(false);
     }
+  }, []);
+
+
+  // handle delete item
+  const handleItemDelete = (itemid) => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user && user.user._id;
+    const itemIdToDelete = itemid;
+    console.log(userId ,   itemIdToDelete)
+    // Data to send in the request body
+    const dataToDelete = {
+      userId: userId,
+      itemId: itemIdToDelete
+    };
+    
+    // Make a DELETE request to your backend API
+    axios.delete('https://jk-skills.onrender.com/wishlist/delete', { data: dataToDelete })
+      .then(response => {
+        // Handle success (e.g., show a success message)
+        alert('Item successfully deleted from the cart!');
+        // You might want to update your local state to reflect the removal
+      })
+      .catch(error => {
+        // Handle error (e.g., show an error message)
+        alert('Error deleting item from the cart!');
+        console.error('Error deleting item:', error);
+      });
   };
 
-  const ItemCard = ({ id, imgSrc, itemName, itemPrice }) => (
-    <div className="col-md-4 mb-4">
-      <div className="position-relative">
-        {favorites.includes(id) ? (
-          <FaHeart
-            className={`position-absolute top-0 end-0 mt-2 mr-1 heart-icon clickable ${
-              wiggle ? "wiggle" : ""
-            }`}
-            size={24}
-            onClick={() => handleFavoriteClick(id)}
-            style={{ color: "red" }} // Set the color to red
-          />
-        ) : (
-          <FaRegHeart
-            className={`position-absolute top-0 end-0 mt-3 mr-1 heart-icon clickable ${
-              wiggle ? "wiggle" : ""
-            }`}
-            size={24}
-            onClick={() => handleFavoriteClick(id)}
-          />
-        )}
-        <img src={imgSrc} alt={itemName} className="img-fluid rounded" />
-      </div>
-      <div className="text-left mt-2">
-        <div className="text-xl font-saira font-medium">{itemName}</div>
-        <div id={`Element${id}`} className="text-lg font-saira">
-          ₹ {itemPrice}{" "}
-        </div>
-      </div>
-    </div>
-  );
 
   return (
-    <div className="container-fluid bg-light py-5 p-5 mb-5">
-      <div className="container">
-        <div className="row justify-content-start">
-          <div className="col-md-8">
-            <div className="text-left mb-4">
-              {/* Moved the favorite title towards left */}
-              <div className="col-12 col-md-4 d-flex align-items-center">
-                <div style={customFontStyle} className="mr-4">
-                  {" "}
-                  {/* Increased margin-right */}
-                  Favourite
+    <div>
+      <h2>Favorites</h2>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className='fav-main-con'>
+          {favoritesData.map((item, index) => (
+            <div key={index}>
+              <div className='fav-sub-con'>
+                <div className='fav-image'> 
+                   <img src={`data:image/png;base64, ${item.itemImage1}`} alt={`Item ${item.itemname}`} />
                 </div>
-                <div className="flex-grow-1"></div>
-                <img
-                  src={heartImg} // Use the heartImg variable
-                  alt="Heart"
-                  className="w-6" // Set the desired width (half of 12)
-                />
+                <p>{item.itemname}</p>
+                <p>{item.price}</p>
+                <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
+                  <DeleteOutlinedIcon />
+                </div>
               </div>
+              {/* Add more details or styling as needed */}
             </div>
-            <div className="row">
-              <ItemCard
-                id="Frame2"
-                imgSrc="https://file.rendit.io/n/KyS9lcjolbx5NzKPcXmV.png"
-                itemName="Bridal wear"
-                itemPrice="2599.00"
-              />
-              <ItemCard
-                id="Frame3"
-                imgSrc="https://file.rendit.io/n/2xkv9yUGYCp92Ml0SvTj.png"
-                itemName="Semi Kanchi pattu"
-                itemPrice="2599.00"
-              />
-              <ItemCard
-                id="Frame4"
-                imgSrc="https://file.rendit.io/n/Jo5Z2eZXNefcDuNptJcQ.png"
-                itemName="Light Weight Pattu"
-                itemPrice="2599.00"
-              />
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default Favourites;
+export default Favorites;                    

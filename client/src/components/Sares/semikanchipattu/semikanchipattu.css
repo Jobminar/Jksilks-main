@@ -24,7 +24,7 @@
 }
 .sare-section{
     /* border: 1px solid green; */
-    padding: 3rem 0rem;
+    padding: 2rem 0rem;
     display: grid;
     grid-template-columns:  100%;
 }

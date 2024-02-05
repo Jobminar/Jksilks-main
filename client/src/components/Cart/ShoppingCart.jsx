@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './shoppingcart.css';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import axios from 'axios';
 
 const ShoppingCart = () => {
   const [cartData, setCartData] = useState([]);
@@ -68,33 +69,32 @@ const ShoppingCart = () => {
   };
 
   // handle delete
-  const handleItemDelete = async ()=> {
+  const handleItemDelete = (itemid) => {
     const user = JSON.parse(sessionStorage.getItem("user"));
-    console.log(user);
     const userId = user && user.user._id;
-    try {
-      const deleteUrl = `https://jk-skills.onrender.com/deleteCartByUserId/${userId}`;
-
-      const response = await fetch(deleteUrl, {
-        method: 'DELETE',
+    const itemIdToDelete = itemid;
+    console.log(userId ,   itemIdToDelete)
+    // Data to send in the request body
+    const dataToDelete = {
+      userId: userId,
+      itemId: itemIdToDelete
+    };
+    
+    // Make a DELETE request to your backend API
+    axios.delete('https://jk-skills.onrender.com/remove-from-cart', { data: dataToDelete })
+      .then(response => {
+        // Handle success (e.g., show a success message)
+        alert('Item successfully deleted from the cart!');
+        // You might want to update your local state to reflect the removal
+      })
+      .catch(error => {
+        // Handle error (e.g., show an error message)
+        alert('Error deleting item from the cart!');
+        console.error('Error deleting item:', error);
       });
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete item. Status: ${response.status}`);
-      }
-
-      alert('Item successfully deleted');
-      // Remove the deleted item from the local state
-      // setCartData(prevData => prevData.filter(item => item._id !== itemId));
-      // // Also remove quantity state for the deleted item
-      // setQuantityById(prevQuantityById => {
-      //   const { [itemId]: deletedQuantity, ...rest } = prevQuantityById;
-      //   return rest;
-      // });
-    } catch (error) {
-      console.error('Error deleting item:', error);
-    }
   };
+  
+  
 
   return (
     <div className='shoppingCart-con'>
@@ -119,14 +119,23 @@ const ShoppingCart = () => {
                   <span>{quantityById[item._id]}</span>
                   <button onClick={() => handleIncrease(item._id)}>+</button>
                 </div>
-                <div className='delete-icon' onClick={() => handleItemDelete()}>
+                <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
                   <DeleteOutlinedIcon />
                 </div>
               </div>
             ))}
-            <div className='totalamount'>
-              <h2>Total Amount : {totalAmount}</h2>
+            <div className='checkout-amount'>
+              
+              <div className='totalamount'>
+                <h2>Total Amount : {totalAmount}</h2>
+              </div>
+              <div className='checkout-button'>
+                <button>
+                    Proceed to checkout
+                </button>
+              </div>
             </div>
+            
           </div>
         ) : (
           <p>Your cart is empty.</p>

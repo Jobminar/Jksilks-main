@@ -35,7 +35,7 @@ const Productview = () => {
       alert(`Your total amount is ${Buynowamount} rupes`);
     };
   
-   
+  //  handle addto cart----------------------------------------------->backend
 
     const Buynowamount = parseInt(selectedProduct.price) * quantity
       
@@ -44,12 +44,11 @@ const Productview = () => {
     console.log(user);
     const userId = user && user.user._id;
    
-
-   console.log(`id ${userId}`)
     const handleAddToCart = () => {
       const user = JSON.parse(sessionStorage.getItem("user"));
       console.log(user);
       const userId = user && user.user._id;
+      const itemid = selectedProduct._id
      
         const dataToSend = {
           category: selectedProduct.category || null,
@@ -66,32 +65,80 @@ const Productview = () => {
           // itemImage3: 'exampleImage3Base64',
           // itemImage4: 'exampleImage4Base64',
           userId:userId,
+          itemId:itemid,
           quantity : quantity,
         };
     
         // Make a POST request to your backend API
         axios.post('https://jk-skills.onrender.com/add-to-cart', dataToSend)
-          .then(response => {
-            // Handle success (e.g., show a success message)
-            
-            alert(`Successfully added ${quantity} items to the cart!`);
-          })
-          .catch(error => {
-            alert(`error added items to the cart!`);
+        .then(response => {
+          // Handle success (e.g., show a success message)
+          alert(`Successfully added ${quantity} items to the favorite!`);
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 401) {
+            alert('This item is already added to the wishlist.');
+          } else {
+            alert('Error adding items to the wishlist.');
+          }
 
-            // Handle error (e.g., show an error message)
-            console.error('Error adding items to the cart:', error);
-          });
+          // Handle other errors if needed
+          console.error('Error adding items to the wishlist:', error);
+        });
       };
     
-      const [isFavorite, setIsFavorite] = useState(false);
 
-      const handlefavorite = () => {
-        // Toggle the state when the icon is clicked
-        setIsFavorite(prevState => !prevState);
-      };
 
+    // handle favorite ----------------------------------------------------->backend
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    const handlefavorite = () => {
+      setIsFavorite(prevState => !prevState);
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      console.log(user);
+      const itemId = selectedProduct._id
+      const userId = user && user.user._id;
+     console.log(itemId)
+     console.log(userId)
+
+        const dataToSendfav = {
+          category: selectedProduct.category || null,
+          itemname: selectedProduct.itemname ||  null,
+          price: selectedProduct.price,
+          code: selectedProduct.code,
+          stitchingOptions: selectedProduct.stitchingOptions,
+          fabric: selectedProduct.fabric,
+          washCare: selectedProduct.washCare,
+          length: selectedProduct.length,
+          description: selectedProduct.description,
+          itemImage1: selectedProduct.itemImage1,
+          // itemImage2: 'exampleImage2Base64',
+          // itemImage3: 'exampleImage3Base64',
+          // itemImage4: 'exampleImage4Base64',
+          userId:userId,
+          itemId:itemId
+          // quantity : quantity,
+        };
     
+        // Make a POST request to your backend API
+        // Make a POST request to your backend API
+        axios.post('https://jk-skills.onrender.com/wishlist/add', dataToSendfav)
+        .then(response => {
+          // Handle success (e.g., show a success message)
+          alert(`Successfully added ${quantity} items to the favorite!`);
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 401) {
+            alert('This item is already added to the wishlist.');
+          } else {
+            alert('Error adding items to the wishlist.');
+          }
+
+          // Handle other errors if needed
+          console.error('Error adding items to the wishlist:', error);
+        });
+
+      };
 
 
   return (
