@@ -23,6 +23,8 @@ import Product from "./components/Admin/Products/Product";
 import ProductUpdate from "./components/Admin/Products/tabs/productupdate";
 import Productview from "./components/Sares/Productview/productview";
 import Orders from "./components/Orders/orders";
+import Address from "./components/Addresses/addresses";
+import Ordersummary from "./components/Orders/orders";
 function App() {
   return (
     <>
@@ -43,7 +45,8 @@ function App() {
           <Route path="/purekanchhipattu" element={<Purekanchipattu />} />
           <Route path="/bridalware" element={<Bridalware />} />
           <Route path="/purekanjivaram" element={<Purekanjivaram />} />
-          <Route path="/orders" element={<Orders/>} />
+          <Route path="/address" element={<Address/>} />
+          <Route path="/ordersummary" element={<Ordersummary/>} />
 
           {/* Admin */}
           <Route path="/adminheader" element={<Adminheader />} />

@@ -17,23 +17,22 @@ const Productview = () => {
   // handle quantity
  
     const [quantity, setQuantity] = useState(1);
-  
+
     const handleIncrease = () => {
-      setQuantity(quantity => quantity + 1);
+      setQuantity((prevQuantity) => prevQuantity + 1);
     };
-  
+    
     const handleDecrease = () => {
       if (quantity > 1) {
-        setQuantity(quantity => quantity - 1);
+        setQuantity((prevQuantity) => prevQuantity - 1);
       }
     };
-
 
     // handle buttons
     const handleBuyNow = () => {
       // Add logic for handling "Buy Now" functionality
       alert(`Your total amount is ${Buynowamount} rupes`);
-      navigate('/orders')
+      navigate('/address')
     };
    
   //  handle addto cart----------------------------------------------->backend
@@ -74,17 +73,17 @@ const Productview = () => {
         axios.post('https://jk-skills.onrender.com/add-to-cart', dataToSend)
           .then(response => {
           // Handle success (e.g., show a success message)
-          alert(`Successfully added ${quantity} items to the favorite!`);
+          alert(`Successfully added ${quantity} items to the cart!`);
         })
         .catch(error => {
           if (error.response && error.response.status === 401) {
-            alert('This item is already added to the wishlist.');
+            alert('This item is already added to the cart.');
           } else {
-            alert('Error adding items to the wishlist.');
+            alert('Error adding items to the cart.');
           }
 
           // Handle other errors if needed
-          console.error('Error adding items to the wishlist:', error);
+          console.error('Error adding items to the cart:', error);
         });
       };
     
@@ -185,9 +184,9 @@ const Productview = () => {
                   {/* <h1>id :{userId}</h1> */}
                   <div className='quantity-section'>Quantity :  
                   <div className='quantity-sub-section'>
-                    <button onClick={()=>{handleIncrease}}>-</button>
+                    <button onClick={handleDecrease}>-</button>
                     <span>{quantity}</span>
-                    <button onClick={()=>{handleDecrease}}>+</button>
+                    <button onClick={handleIncrease}>+</button>
                   </div>
                   </div>
                   <div className='buttons-section'>

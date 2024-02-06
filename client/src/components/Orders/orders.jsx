@@ -1,315 +1,83 @@
-import React from 'react'
-import { useState,useEffect } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import MenuItem from '@mui/material/MenuItem';
-import NoCrashIcon from '@mui/icons-material/NoCrash';
-import './orders.css'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './orders.css'
+import { useNavigate } from 'react-router-dom';
 
-const Orders = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        mobileNumber: '',
-        house: '',
-        village: '',
-        landmark: '',
-        pincode: '',
-        states: '',
-      });
-    
-      const [isVisible, setIsVisible] = useState(false);
+const Ordersummary = () => {
+  const navigate = useNavigate()
+  const [cartData, setCartData] = useState([]);
 
-      const toggleVisibility = () => {
-        setIsVisible(!isVisible);
-      };
-
-      const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [id]: value,
-        }));
-      };
-
-      const handleChangedropdown = (event) => {
-        const { name, value } = event.target;
-        setFormData({
-          ...formData,
-          [name]: value,
-        });
-      };
-      
-      const handleUseAddress = () => {
-        // Use formData as needed (e.g., send it to the server)
-        console.log('Form Data:', formData);
-    
-        // Post the data to the backend
-        const user = JSON.parse(sessionStorage.getItem("user"));
-        const userId = user && user.user._id;
-    
-        const dataToSend = {
-          userId: userId,
-          userName: formData.name,
-          mobileNumber: formData.mobileNumber,
-          houseNumber: formData.house,
-          street: formData.village,
-          landmark: formData.landmark,
-          pincode: formData.pincode,
-          state: formData.states,
-        };
-    
-        // Make a POST request to your backend API
-        fetch('https://jk-skills.onrender.com/create-address', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(dataToSend),
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`Failed to create address. Status: ${response.status}`);
-            }
-            return response.json();
-          })
-          .then(data => {
-            // Handle success (e.g., show a success message)
-            console.log('Address created successfully:', data);
-            alert('Address added successfully')
-          })
-          .catch(error => {
-            console.error('Error creating address:', error);
-            // Handle error (e.g., show an error message)
-          });
-      };
-
-
-    //   fetching addresses
-
-  const [data, setData] = useState(null);
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  const userId = user && user.user._id;
+  // get items
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://jk-skills.onrender.com/addresses/user/${userId}`);
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
-
-     // handle delete
-  const handleAddDelete = (itemid) => {
+    // Fetch data from the API
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const userId = user && user.user._id;
-    const itemIdToDelete = itemid;
-    console.log(userId ,   itemIdToDelete)
-    // Data to send in the request body
-    const dataToDelete = {
-      userId: userId,
-      addressId: itemIdToDelete
-    };
-    console.log(userId)
-    // console.log(addressId)
+      console.log(user);
+      const userId = user && user.user._id;
     
-    // Make a DELETE request to your backend API
-    axios.delete('https://jk-skills.onrender.com/delete-address', { data: dataToDelete })
-      .then(response => {
-        // Handle success (e.g., show a success message)
-        alert('Item successfully deleted from the cart!');
-        // You might want to update your local state to reflect the removal
-      })
-      .catch(error => {
-        // Handle error (e.g., show an error message)
-        alert('Error deleting item from the cart!');
-        console.error('Error deleting item:', error);
-      });
-  };
+      if (userId) {
+        // Make a GET request to the /getCartByUserId/:userId endpoint
+        fetch(`https://jk-skills.onrender.com/getCartByUserId/${userId}`)
+          .then((response) => {
+            // Check if the request was successful (status code 2xx)
+            if (response.ok) {
+              return response.json();
+            } else {
+              // Handle errors for unsuccessful requests
+              throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            }
+          })
+          .then((cartItems) => {
+            // Handle the response data (cartItems) as needed
+            console.log(cartItems);
+            setCartData(cartItems)
+          })
+          .catch((error) => {
+            // Handle errors during the fetch operation
+            console.error("Fetch error:", error);
+          });
+      } else {
+        console.error("User not logged in");
+        // Handle not logged in scenario
+      }
+  }, []);
 
 
   return (
     <>
-     {/* get the addresses */}
-     <div className='getaddresses'>
-     {data && data.map((item, index) => (
-     <div key={index} className='addresses-sub-con'>
-      <p style={{fontWeight:'bold'}}>{item.userName}</p>
-      <p>{item.houseNumber}</p>
-      <p>{item.street}</p>
-      <p>{item.Landmark}</p>
-      <p>{item.pincode}</p>
-      <p>{item.state}</p>
-      <p>Phone number: {item.mobileNumber}</p>
-      <div className='deliver-add'>
-        <button>
-            Deliver to this address
-        </button>
-      </div>
-      <div className='edit-add'>
-        <button onClick={()=>{handleAddDelete(item._id)}}>
-            Delete this address
-        </button>
-      </div>
-      
-    </div>
-  ))}
-</div>
+      <div className='ordersmain-con'>
+          <h1>Orders summary</h1>
 
+          {/* <ul>
          
-     <div className='addnew-address-button'>
-        <button onClick={toggleVisibility}>
-          Add new address
-        </button>
-      </div>
-     {/* add new address */}
-      {isVisible && <div className="content">
-      <div >
-            
-            <DialogTitle>Add new address</DialogTitle>
-            <DialogContent>
-            
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="name"
-                    label="Fullname (First and Last name)"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-                
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="mobileNumber"
-                    label="Mobile number"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={formData.mobileNumber}
-                    onChange={handleChange}
-                />
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="house"
-                    label="Flat, House no, Building, Company , Apartment"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={formData.house}
-                    onChange={handleChange}
-                    
-                />
-                <TextField
-                    autoFocus
-                    // margin="dense"
-                    id="village"
-                    label="Area,street,Sector,Village"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={formData.village}
-                    onChange={handleChange}
-
-                />
-                <TextField
-                    autoFocus
-                    // margin="dense"
-                    id="landmark"
-                    label="Landmark"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={formData.landmark}
-                    onChange={handleChange}
-                />
-                <TextField
-                    autoFocus
-                    // margin="dense"
-                    id="pincode"
-                    label="Pincode"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                    value={formData.pincode}
-                    onChange={handleChange}
-                />
-                <TextField
-                    select
-                    value={formData.states}
-                    onChange={handleChangedropdown}
-                    variant="standard"
-                    label="State"
-                    id='states'  // Change this from 'state' to 'state'
-                    name='states'
-                    fullWidth
-                    >
-                
-                        <MenuItem value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</MenuItem>
-                        <MenuItem value="Andhra Pradesh">Andhra Pradesh</MenuItem>
-                        <MenuItem value="Arunachal Pradesh">Arunachal Pradesh</MenuItem>
-                        <MenuItem value="Assam">Assam</MenuItem>
-                        <MenuItem value="Bihar">Bihar</MenuItem>
-                        <MenuItem value="Chandigarh">Chandigarh</MenuItem>
-                        <MenuItem value="Chhattisgarh">Chhattisgarh</MenuItem>
-                        <MenuItem value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</MenuItem>
-                        <MenuItem value="Delhi">Delhi</MenuItem>
-                        <MenuItem value="Goa">Goa</MenuItem>
-                        <MenuItem value="Gujarat">Gujarat</MenuItem>
-                        <MenuItem value="Haryana">Haryana</MenuItem>
-                        <MenuItem value="Himachal Pradesh">Himachal Pradesh</MenuItem>
-                        <MenuItem value="Jharkhand">Jharkhand</MenuItem>
-                        <MenuItem value="Karnataka">Karnataka</MenuItem>
-                        <MenuItem value="Kerala">Kerala</MenuItem>
-                        <MenuItem value="Lakshadweep">Lakshadweep</MenuItem>
-                        <MenuItem value="Madhya Pradesh">Madhya Pradesh</MenuItem>
-                        <MenuItem value="Maharashtra">Maharashtra</MenuItem>
-                        <MenuItem value="Manipur">Manipur</MenuItem>
-                        <MenuItem value="Meghalaya">Meghalaya</MenuItem>
-                        <MenuItem value="Mizoram">Mizoram</MenuItem>
-                        <MenuItem value="Nagaland">Nagaland</MenuItem>
-                        <MenuItem value="Odisha">Odisha</MenuItem>
-                        <MenuItem value="Others">Others</MenuItem>
-                        <MenuItem value="Puducherry">Puducherry</MenuItem>
-                        <MenuItem value="Punjab">Punjab</MenuItem>
-                        <MenuItem value="Rajasthan">Rajasthan</MenuItem>
-                        <MenuItem value="Sikkim">Sikkim</MenuItem>
-                        <MenuItem value="Tamil Nadu">Tamil Nadu</MenuItem>
-                        <MenuItem value="Telangana">Telangana</MenuItem>
-                        <MenuItem value="Tripura">Tripura</MenuItem>
-                        <MenuItem value="Uttar Pradesh">Uttar Pradesh</MenuItem>
-                        <MenuItem value="Uttarakhand">Uttarakhand</MenuItem>
-                        <MenuItem value="West Bengal">West Bengal</MenuItem>
-
-                </TextField>
-            </DialogContent>
-            <DialogActions className='formbuttons'>
-                <Button onClick={handleUseAddress}>Use this address</Button>
-            </DialogActions>
-            
-        
+              <p>{JSON.stringify(cartData, null, 2)}</p>
+      
+        </ul> */}
+        <div className='delivery-address'>
+             
         </div>
-        {isVisible ? 'visible' : 'hidden'}!</div>}
-       
-     
+        <div className='main-order-con'>
+          <h1>Orders</h1> 
+        {cartData.map(product => (
+          <div key={product.id} className='sub-order-con'>
+            <div className='order-image'>
+            <img src={`data:image/png;base64, ${product.itemImage1}`} alt={`Item ${product.itemname}`} />
+            </div>
+            <div>
+              <h3>{product.itemname}</h3>
+              <p>Price: {product.price}</p>
+            </div>
+            <div>
+             <p>Description: {product.description}</p>
+             <p>Quantity: {product.quantity}</p>
+            </div>
+            
+            
+          </div>
+          ))}
+        </div>
+      </div>
     </>
-    
-  )
-}
+  );
+};
 
-export default Orders
+export default Ordersummary;

@@ -120,7 +120,13 @@ const handleUpdateQuantity = (itemId, action) => {
   
 
   return (
-    <div className='shoppingCart-con'>
+    <>
+       {/* <ul>
+         
+              <p>{JSON.stringify(items, null, 2)}</p>
+      
+        </ul> */}
+      <div className='shoppingCart-con'>
       <div className='shoppingcart-main-con'>
         <h2>Your Shopping Cart</h2>
         {cartData.length > 0 ? (
@@ -153,7 +159,7 @@ const handleUpdateQuantity = (itemId, action) => {
                 <h2>Total Amount : {totalAmount}</h2>
               </div>
               <div className='checkout-button'>
-                <button onClick={()=>{navigate('/orders')}}>
+                <button onClick={()=>{navigate('/address')}}>
                     Proceed to checkout
                 </button>
               </div>
@@ -164,7 +170,9 @@ const handleUpdateQuantity = (itemId, action) => {
           <p>Your cart is empty.</p>
         )}
       </div>
-    </div>
+       </div>
+    </>
+    
   );
 };
 
