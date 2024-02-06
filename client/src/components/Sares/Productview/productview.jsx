@@ -33,8 +33,9 @@ const Productview = () => {
     const handleBuyNow = () => {
       // Add logic for handling "Buy Now" functionality
       alert(`Your total amount is ${Buynowamount} rupes`);
+      navigate('/orders')
     };
-  
+   
   //  handle addto cart----------------------------------------------->backend
 
     const Buynowamount = parseInt(selectedProduct.price) * quantity
@@ -184,9 +185,9 @@ const Productview = () => {
                   {/* <h1>id :{userId}</h1> */}
                   <div className='quantity-section'>Quantity :  
                   <div className='quantity-sub-section'>
-                    <button onClick={()=>{handleUpdateQuantity(item._id, 'decrease')}}>-</button>
+                    <button onClick={()=>{handleIncrease}}>-</button>
                     <span>{quantity}</span>
-                    <button onClick={()=>{handleUpdateQuantity(item._id, 'increase')}}>+</button>
+                    <button onClick={()=>{handleDecrease}}>+</button>
                   </div>
                   </div>
                   <div className='buttons-section'>
