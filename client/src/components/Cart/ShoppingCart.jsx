@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import './shoppingcart.css';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ShoppingCart = () => {
+  const navigate = useNavigate()
   const [cartData, setCartData] = useState([]);
-  const [quantityById, setQuantityById] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
@@ -42,31 +43,53 @@ const ShoppingCart = () => {
       }
   }, []);
 
-  useEffect(() => {
-    // Calculate total amount when cartData or quantityById changes
-    const newTotalAmount = cartData.reduce((total, item) => {
-      const itemQuantity = quantityById[item._id] || 1;
-      return total + item.price * itemQuantity;
-    }, 0);
+// update quantity
+const [items, setItems] = useState([]);
 
-    setTotalAmount(newTotalAmount);
-  }, [cartData, quantityById]);
+const handleUpdateQuantity = (itemId, action) => {
+  // Create a new array with updated quantities
+  const updatedItems = cartData.map((item) => {
+    if (item.itemId === itemId) {
+      // Perform the action based on whether it's 'increase' or 'decrease'
+      item.quantity = action === 'increase' ? item.quantity + 1 : item.quantity - 1;
 
-  const handleIncrease = (itemId) => {
-    setQuantityById(prevQuantityById => ({
-      ...prevQuantityById,
-      [itemId]: (prevQuantityById[itemId] || 1) + 1,
-    }));
-  };
-
-  const handleDecrease = (itemId) => {
-    if (quantityById[itemId] > 1) {
-      setQuantityById(prevQuantityById => ({
-        ...prevQuantityById,
-        [itemId]: prevQuantityById[itemId] - 1,
-      }));
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const userId = user && user.user._id;
+     console.log(userId , itemId)
+     const dataToDelete = {
+      userId: userId,
+      itemId: itemId,
+      quantity: item.quantity
+    };
+    
+    // Make a PUT request to update the quantity on the server
+    fetch(`https://jk-skills.onrender.com/update-cart`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dataToDelete), // Pass the dataToDelete directly as the request body
+    })
+      .then((response) => response.json())
+      .then((updatedItem) => {
+        // Handle the response if needed
+        console.log('Quantity updated successfully:', updatedItem);
+        alert(`Quantity updated successfully`);
+      })
+      .catch((error) => {
+        console.error('Error updating quantity:', error);
+        alert(`Error updating quantity`);
+      });
+    
     }
-  };
+    return item;
+  });
+
+  // Update the local state with the new array
+  setItems(updatedItems);
+};
+
+
 
   // handle delete
   const handleItemDelete = (itemid) => {
@@ -115,9 +138,9 @@ const ShoppingCart = () => {
                 </div>
                 <div className='quantity-sub-section'>
                   <h1>Quantity :</h1>
-                  <button onClick={() => handleDecrease(item._id)}>-</button>
-                  <span>{quantityById[item._id]}</span>
-                  <button onClick={() => handleIncrease(item._id)}>+</button>
+                  <button onClick={() => handleUpdateQuantity(item.itemId, 'decrease')}>-</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => handleUpdateQuantity(item.itemId, 'increase')}>+</button>
                 </div>
                 <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
                   <DeleteOutlinedIcon />
@@ -130,7 +153,7 @@ const ShoppingCart = () => {
                 <h2>Total Amount : {totalAmount}</h2>
               </div>
               <div className='checkout-button'>
-                <button>
+                <button onClick={()=>{navigate('/orders')}}>
                     Proceed to checkout
                 </button>
               </div>

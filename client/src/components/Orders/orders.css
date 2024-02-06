@@ -1,0 +1,71 @@
+.content{
+    width: 60%;
+    /* border: 1px solid black; */
+    margin-left: auto;
+    margin-right: auto;
+    margin: 2rem auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adjust values as needed */
+}
+
+  .addnew-address-button{
+    text-align: center;
+    margin: 3rem;
+    
+  }
+  .addnew-address-button button{
+   width: 10rem;
+   height: 3rem;
+    border: none;
+  }
+  .addnew-address-button:hover{
+    cursor: pointer;
+  }
+  .getaddresses{
+    margin: 2rem;
+    /* border: 1px solid black; */
+    display: grid;
+    grid-template-columns: 40% 40%;
+    justify-content: space-evenly;
+    gap: 2rem;
+  }
+  .addresses-sub-con{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+  }
+  .addresses-sub-con p{
+    margin: 0px;
+  }
+  .deliver-add{
+    text-align: center;
+    margin: 1rem;
+  }
+  .deliver-add button{
+    width: 15rem;
+    border: none;
+    font-family: Sail;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    background-color: rgba(206, 0, 17, 1);
+    color: white;
+    padding: 0.5rem 1rem ;
+  }
+  .edit-add{
+    text-align: center;
+    margin: 1rem;
+  }
+  .edit-add button{
+    width: 15rem;
+    border: none;
+    font-family: Sail;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: center;
+    background-color: rgba(206, 0, 17, 1);
+    color: white;
+    padding: 0.5rem 1rem ;
+  }

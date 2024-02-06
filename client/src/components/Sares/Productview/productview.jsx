@@ -71,7 +71,7 @@ const Productview = () => {
     
         // Make a POST request to your backend API
         axios.post('https://jk-skills.onrender.com/add-to-cart', dataToSend)
-        .then(response => {
+          .then(response => {
           // Handle success (e.g., show a success message)
           alert(`Successfully added ${quantity} items to the favorite!`);
         })
@@ -87,6 +87,7 @@ const Productview = () => {
         });
       };
     
+      
 
 
     // handle favorite ----------------------------------------------------->backend
@@ -183,9 +184,9 @@ const Productview = () => {
                   {/* <h1>id :{userId}</h1> */}
                   <div className='quantity-section'>Quantity :  
                   <div className='quantity-sub-section'>
-                    <button onClick={handleDecrease}>-</button>
+                    <button onClick={()=>{handleUpdateQuantity(item._id, 'decrease')}}>-</button>
                     <span>{quantity}</span>
-                    <button onClick={handleIncrease}>+</button>
+                    <button onClick={()=>{handleUpdateQuantity(item._id, 'increase')}}>+</button>
                   </div>
                   </div>
                   <div className='buttons-section'>
