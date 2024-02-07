@@ -7,6 +7,9 @@ import search from "./images/search.png";
 import wishlist from "./images/wishlist.png";
 import profile from "./images/profile.png";
 import ProfilePopup from "./ProfilePopup";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Badge, Stack } from "@mui/material";
 
 const Navbar = () => {
   const [isProfilePopupOpen, setProfilePopupOpen] = useState(false);
@@ -30,6 +33,17 @@ const Navbar = () => {
   const handleProfileClick = () => {
     setProfilePopupOpen(!isProfilePopupOpen);
   };
+  
+
+  var favoritesLengthString = sessionStorage.getItem('favoritesLength');
+  var favoritesLength = parseInt(favoritesLengthString);
+  console.log(favoritesLength);
+
+  
+  var cartLengthString = sessionStorage.getItem('cartLength');
+  var cartLength = parseInt(cartLengthString);
+  console.log(cartLength);
+
 
   return (
     <div className="navbar-con">
@@ -77,8 +91,22 @@ const Navbar = () => {
         Pure Kanjivaram Silk
       </p>
       <img src={search} alt="search" onClick={handleSearchClick} />
-      <img src={wishlist} alt="wishlist" onClick={handleWishlistClick} />
-      <img src={cart} alt="cart" onClick={handleCartClick} />
+      {/* <img src={wishlist} alt="wishlist" onClick={handleWishlistClick} /> */}
+      <div>
+      <Stack  onClick={handleWishlistClick}  >
+        <Badge badgeContent={favoritesLength} color="error">
+        <FavoriteIcon color="action" />
+        </Badge>
+      </Stack>
+      </div>
+      {/* <img src={cart} alt="cart" onClick={handleCartClick} /> */}
+      <div>
+      <Stack onClick={handleCartClick}  >
+        <Badge badgeContent={cartLength} color="error">
+        <ShoppingCartIcon color="action" />
+        </Badge>
+      </Stack>
+      </div>
       <img
         src={profile}
         alt="profile"
@@ -95,6 +123,8 @@ const Navbar = () => {
       >
         {isProfilePopupOpen && <ProfilePopup />}
       </div>
+
+      
     </div>
   );
 };

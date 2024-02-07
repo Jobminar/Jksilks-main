@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const ShoppingCart = () => {
   const navigate = useNavigate()
   const [cartData, setCartData] = useState([]);
+  const [cartLength, setCartLength] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
@@ -31,7 +32,10 @@ const ShoppingCart = () => {
           .then((cartItems) => {
             // Handle the response data (cartItems) as needed
             console.log(cartItems);
+            setCartLength(cartItems.length);
+            console.log(cartLength)
             setCartData(cartItems)
+            
           })
           .catch((error) => {
             // Handle errors during the fetch operation
@@ -117,7 +121,11 @@ const handleUpdateQuantity = (itemId, action) => {
       });
   };
   
-  
+  // set cart length
+
+  useEffect(() => {
+    sessionStorage.setItem('cartLength', cartLength.toString());
+  }, [cartLength]);
 
   return (
     <>
@@ -171,6 +179,7 @@ const handleUpdateQuantity = (itemId, action) => {
         )}
       </div>
        </div>
+       {/* <h1>{cartLength}</h1> */}
     </>
     
   );

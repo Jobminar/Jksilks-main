@@ -24,3 +24,6 @@
 .navbar-con img:hover{
     cursor: pointer;
 }
+.navbar-con div:hover{
+    cursor: pointer;
+}

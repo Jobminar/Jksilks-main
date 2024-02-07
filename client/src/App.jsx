@@ -25,6 +25,7 @@ import Productview from "./components/Sares/Productview/productview";
 import Orders from "./components/Orders/orders";
 import Address from "./components/Addresses/addresses";
 import Ordersummary from "./components/Orders/orders";
+import CreateOrderForm from "./components/Orders/orders";
 function App() {
   return (
     <>
@@ -46,7 +47,7 @@ function App() {
           <Route path="/bridalware" element={<Bridalware />} />
           <Route path="/purekanjivaram" element={<Purekanjivaram />} />
           <Route path="/address" element={<Address/>} />
-          <Route path="/ordersummary" element={<Ordersummary/>} />
+          <Route path="/ordersummary" element={<CreateOrderForm/>} />
 
           {/* Admin */}
           <Route path="/adminheader" element={<Adminheader />} />

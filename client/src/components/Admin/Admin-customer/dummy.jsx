@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Favourites.css'
+import './Favourites.css';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
 
@@ -26,7 +26,7 @@ const Favorites = () => {
         })
         .then(data => {
           setFavoritesData(data);
-          setFavoritesLength(data.length);
+          setFavoritesLength(data.length); // Update the length
           setLoading(false);
         })
         .catch(error => {
@@ -41,17 +41,16 @@ const Favorites = () => {
 
 
   // handle delete item
-  const handleItemDelete = (itemid) => {
+  const handleItemDelete = (itemId) => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     const userId = user && user.user._id;
-    const itemIdToDelete = itemid;
-    console.log(userId ,   itemIdToDelete)
+
     // Data to send in the request body
     const dataToDelete = {
       userId: userId,
-      itemId: itemIdToDelete
+      itemId: itemId
     };
-    
+
     // Make a DELETE request to your backend API
     axios.delete('https://jk-skills.onrender.com/wishlist/delete', { data: dataToDelete })
       .then(response => {
@@ -65,13 +64,13 @@ const Favorites = () => {
         console.error('Error deleting item:', error);
       });
   };
-  
+
+  // Update session storage when favoritesLength changes
   useEffect(() => {
     sessionStorage.setItem('favoritesLength', favoritesLength.toString());
   }, [favoritesLength]);
 
   return (
-    <>
     <div>
       <h2>Favorites</h2>
       {loading ? (
@@ -96,10 +95,7 @@ const Favorites = () => {
         </div>
       )}
     </div>
-    {/* <h1>{favoritesLength}</h1> */}
-    </>
-    
   );
 };
 
-export default Favorites;                    
+export default Favorites;

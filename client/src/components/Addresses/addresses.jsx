@@ -25,6 +25,7 @@ const Address = () => {
       });
     
       const [isVisible, setIsVisible] = useState(false);
+      const [cartDataid, setCartDataid] = useState([]);
 
       const toggleVisibility = () => {
         setIsVisible(!isVisible);
@@ -46,7 +47,7 @@ const Address = () => {
         });
       };
       
-      const handleUseAddress = () => {
+    const handleUseAddress = () => {
         // Use formData as needed (e.g., send it to the server)
         console.log('Form Data:', formData);
     
@@ -91,51 +92,122 @@ const Address = () => {
       };
     //   fetching addresses
 
-  const [data, setData] = useState(null);
-  const user = JSON.parse(sessionStorage.getItem("user"));
-  const userId = user && user.user._id;
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://jk-skills.onrender.com/addresses/user/${userId}`);
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+    const [data, setData] = useState(null);
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user && user.user._id;
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`https://jk-skills.onrender.com/addresses/user/${userId}`);
+          const result = await response.json();
+          setData(result);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
 
-    fetchData();
-  }, [userId]);
+      fetchData();
+    }, [userId]);
 
 
      // handle delete
-  const handleAddDelete = (itemid) => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const userId = user && user.user._id;
-    const itemIdToDelete = itemid;
-    console.log(userId ,   itemIdToDelete)
-    // Data to send in the request body
-    const dataToDelete = {
-      userId: userId,
-      addressId: itemIdToDelete
+    const handleAddDelete = (itemid) => {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const userId = user && user.user._id;
+      const itemIdToDelete = itemid;
+      console.log(userId ,   itemIdToDelete)
+      // Data to send in the request body
+      const dataToDelete = {
+        userId: userId,
+        addressId: itemIdToDelete
+      };
+      console.log(userId)
+      // console.log(addressId)
+      
+      // Make a DELETE request to your backend API
+      axios.delete('https://jk-skills.onrender.com/delete-address', { data: dataToDelete })
+        .then(response => {
+          // Handle success (e.g., show a success message)
+          alert('Item successfully deleted from the cart!');
+          // You might want to update your local state to reflect the removal
+        })
+        .catch(error => {
+          // Handle error (e.g., show an error message)
+          alert('Error deleting item from the cart!');
+          console.error('Error deleting item:', error);
+        });
     };
-    console.log(userId)
-    // console.log(addressId)
-    
-    // Make a DELETE request to your backend API
-    axios.delete('https://jk-skills.onrender.com/delete-address', { data: dataToDelete })
-      .then(response => {
-        // Handle success (e.g., show a success message)
-        alert('Item successfully deleted from the cart!');
-        // You might want to update your local state to reflect the removal
-      })
-      .catch(error => {
-        // Handle error (e.g., show an error message)
-        alert('Error deleting item from the cart!');
-        console.error('Error deleting item:', error);
-      });
-  };
+
+    // get cart data for ids
+   
+    useEffect(() => {
+      // Fetch data from the API
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const userId = user && user.user._id;
+  
+      if (userId) {
+        // Make a GET request to the /getCartByUserId/:userId endpoint
+        fetch(`https://jk-skills.onrender.com/getCartByUserId/${userId}`)
+          .then((response) => {
+            // Check if the request was successful (status code 2xx)
+            if (response.ok) {
+              return response.json();
+            } else {
+              // Handle errors for unsuccessful requests
+              throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            }
+          })
+          .then((cartItems) => {
+            // Handle the response data (cartItems) as needed
+            console.log(cartItems);
+  
+            // Extracting _id from cartItems and storing in cartItemid state
+            const cartItemIds = cartItems.map(item => item._id);
+            setCartDataid(cartItemIds);
+          })
+          .catch((error) => {
+            // Handle errors during the fetch operation
+            console.error("Fetch error:", error);
+          });
+      } else {
+        console.error("User not logged in");
+        // Handle not logged in scenario
+      }
+    }, []);
+
+    // handle delivery
+
+
+    const handleDelivery = async () => {
+       // Fetch data from the API
+       const user = JSON.parse(sessionStorage.getItem("user"));
+       const userId = user && user.user._id;
+
+      const orderData = {
+        userId: userId,
+        addressId: "65c09202a333bf6b3e924dbf",
+        cartIds: cartDataid,
+        totalAmount: 50000,
+        payment: "yes",
+        orderStatus: "pending",
+      };
+      console.log(orderData)
+      try {
+        const response = await axios.post('https://jk-skills.onrender.com/create-order', orderData);
+  
+        if (response.status === 200) {
+          console.log('Order successfully created:', response.data);
+          alert('order added successfully')
+          navigate('/ordersummary');
+        } else {
+          console.error('Failed to create order:', response.statusText);
+          alert('order failed')
+        }
+      } catch (error) {
+        console.error('Error creating order:', error.message);
+      }
+    };
+  
 
 
   return (
@@ -152,12 +224,12 @@ const Address = () => {
       <p>{item.state}</p>
       <p>Phone number: {item.mobileNumber}</p>
       <div className='deliver-add'>
-        <button onClick={()=>{navigate('/ordersummary')}}>
+        <button onClick={handleDelivery}>
             Deliver to this address
         </button>
       </div>
       <div className='edit-add'>
-        <button onClick={()=>{handleAddDelete(item._id)}}>
+        <button onClick={handleDelivery}>
             Delete this address
         </button>
       </div>
@@ -305,7 +377,11 @@ const Address = () => {
         </div>
         {isVisible ? 'visible' : 'hidden'}!</div>}
        
-     
+        <ul>
+         
+         <p>{JSON.stringify(cartDataid, null, 2)}</p>
+ 
+        </ul>
     </>
     
   )
