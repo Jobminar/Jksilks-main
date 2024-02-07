@@ -12,7 +12,7 @@ const Adminheader =(()=>{
                     <p onClick={()=>{navigate('/admincustomer')}}>Customers</p>
                     <p onClick={()=>{navigate('/inventory')}}>Inventory</p>
                     <p onClick={()=>{navigate('/product')}}>Products</p>
-                    <p>Orders</p>
+                    <p onClick={()=>{navigate('/adminorders')}}>Orders</p>
                     <p onClick={()=>{navigate('/adminfeedback')}}>Feedback</p>
                  </div>
            </div>

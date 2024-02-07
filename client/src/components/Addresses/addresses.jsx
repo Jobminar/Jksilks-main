@@ -179,10 +179,10 @@ const Address = () => {
 
 
     const handleDelivery = async () => {
-       // Fetch data from the API
-       const user = JSON.parse(sessionStorage.getItem("user"));
-       const userId = user && user.user._id;
-
+      // Fetch data from the API
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const userId = user && user.user._id;
+    
       const orderData = {
         userId: userId,
         addressId: "65c09202a333bf6b3e924dbf",
@@ -191,23 +191,26 @@ const Address = () => {
         payment: "yes",
         orderStatus: "pending",
       };
-      console.log(orderData)
+      console.log(orderData);
       try {
-        const response = await axios.post('https://jk-skills.onrender.com/create-order', orderData);
-  
-        if (response.status === 200) {
-          console.log('Order successfully created:', response.data);
-          alert('order added successfully')
-          navigate('/ordersummary');
+        const response = await axios.post(
+          "https://jk-skills.onrender.com/create-order",
+          orderData
+        );
+    
+        if (response.status==201) {
+          console.log("Order successfully created:", response.data);
+          alert("Order added successfully");
+          navigate("/ordersummary");
         } else {
-          console.error('Failed to create order:', response.statusText);
-          alert('order failed')
+          console.error("Failed to create order. Status:", response.status);
+          alert("Order failed. Please try again later.");
         }
       } catch (error) {
-        console.error('Error creating order:', error.message);
+        console.error("Error creating order:", error.message);
+        alert("Error creating order. Please try again later.");
       }
     };
-  
 
 
   return (
@@ -379,7 +382,7 @@ const Address = () => {
        
         <ul>
          
-         <p>{JSON.stringify(cartDataid, null, 2)}</p>
+         {/* <p>{JSON.stringify(cartDataid, null, 2)}</p> */}
  
         </ul>
     </>

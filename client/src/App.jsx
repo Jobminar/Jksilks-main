@@ -16,7 +16,6 @@ import Bridalware from "./components/Sares/Bridalware/bridalware";
 import Purekanjivaram from "./components/Sares/Purekanjivaram/purekanjivaram";
 import Adminheader from "./components/Admin/adminheader";
 import Admincustomer from "./components/Admin/Admin-customer/admin-customer";
-import Adminproduct from "./components/Admin/Admin-product/adminproduct";
 import Adminfeedback from "./components/Admin/Admin-feedback/adminfeedback";
 import Inventory from "./components/Admin/Admin-inventory/admininventory";
 import Product from "./components/Admin/Products/Product";
@@ -26,6 +25,7 @@ import Orders from "./components/Orders/orders";
 import Address from "./components/Addresses/addresses";
 import Ordersummary from "./components/Orders/orders";
 import CreateOrderForm from "./components/Orders/orders";
+import Adminorders from "./components/Admin/Admin-orders/Adminorders";
 function App() {
   return (
     <>
@@ -53,10 +53,10 @@ function App() {
           <Route path="/adminheader" element={<Adminheader />} />
           <Route path="/admincustomer" element={<Admincustomer />} />
           <Route path="/inventory" element={<Inventory/>} />
-          <Route path="/adminproduct" element={<Adminproduct />} />
+          {/* <Route path="/adminproduct" element={<Adminproduct />} /> */}
           <Route path="/adminfeedback" element={<Adminfeedback />} />
           <Route path="/product" element={<Product />} />
-         
+          <Route path="/adminorders" element={<Adminorders />} />
           <Route path="/productupdate" element={<ProductUpdate/>}/>
         </Routes>
         {/* <Footer /> */}
