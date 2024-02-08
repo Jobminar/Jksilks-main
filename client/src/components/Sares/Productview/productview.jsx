@@ -31,8 +31,16 @@ const Productview = () => {
     // handle buttons
     const handleBuyNow = () => {
       // Add logic for handling "Buy Now" functionality
-      alert(`Your total amount is ${Buynowamount} rupes`);
-      navigate('/address')
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const userId = user && user.user._id;
+      if (userId && userId.length > 1) {
+        alert(`Your total amount is ${Buynowamount} rupes`);
+        navigate('/address')
+      } else {
+        // Display an alert
+        alert('Please login before buying any item');
+      }
+      
     };
    
   //  handle addto cart----------------------------------------------->backend
@@ -49,7 +57,7 @@ const Productview = () => {
       console.log(user);
       const userId = user && user.user._id;
       const itemid = selectedProduct._id
-     
+      if (userId && userId.length > 1) {
         const dataToSend = {
           category: selectedProduct.category || null,
           itemname: selectedProduct.itemname ||  null,
@@ -85,6 +93,12 @@ const Productview = () => {
           // Handle other errors if needed
           console.error('Error adding items to the cart:', error);
         });
+        navigate('/cart')
+      } else {
+        // Display an alert
+        alert('Please login before added any item into the cart');
+      }
+        
       };
     
       

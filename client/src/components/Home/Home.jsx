@@ -23,7 +23,10 @@ const Home = () => {
         <div className="new-arrivals">
           <div className="headding">
             <h1>New Arrivals</h1>
+            <div>
             <img src={line} alt="line" />
+            </div>
+            
           </div>
           <div className="newarrivals-main-section">
             <div className="handloomes-section">
@@ -31,9 +34,9 @@ const Home = () => {
             </div>
             <div
               className="newarrivals-main-con"
-              onClick={() => {
-                navigate("/addtocart");
-              }}
+              // onClick={() => {
+              //   navigate("/addtocart");
+              // }}
             >
               {Homedata.map((item, index) => (
                 <div key={index}>
@@ -61,7 +64,10 @@ const Home = () => {
         <div className="Best-sellers-con">
           <div className="headding">
             <h1>Best Sellers</h1>
-            <img src={line} alt="line" />
+            <div>
+              <img src={line} alt="line" /> 
+            </div>
+         
           </div>
           <div className="best-sellers">
             <div className="best-sellers-sub">
