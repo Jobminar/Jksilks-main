@@ -1,5 +1,5 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-// import Footer from "./components/Footer/footer";
+import Footer from "./components/Footer/footer";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
 import Login from "./components/Profile/Login";
@@ -24,13 +24,18 @@ import Productview from "./components/Sares/Productview/productview";
 import Orders from "./components/Orders/orders";
 import Address from "./components/Addresses/addresses";
 import Ordersummary from "./components/Orders/orders";
+import profile from './assets/Whatsapp.jpeg'
 import CreateOrderForm from "./components/Orders/orders";
 import Adminorders from "./components/Admin/Admin-orders/Adminorders";
+import { FloatingWhatsApp } from "react-floating-whatsapp";
+
+
 function App() {
   return (
     <>
       <BrowserRouter>
      {/* <Navbar /> */}
+     <FloatingWhatsApp phoneNumber='6303364305' accountName='JK silks' avatar={profile}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -59,7 +64,7 @@ function App() {
           <Route path="/adminorders" element={<Adminorders />} />
           <Route path="/productupdate" element={<ProductUpdate/>}/>
         </Routes>
-        {/* <Footer /> */}
+        <Footer />
       </BrowserRouter>
     </>
   );
