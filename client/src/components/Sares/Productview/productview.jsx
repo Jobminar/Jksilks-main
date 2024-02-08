@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import axios from 'axios';
+import Navbar from '../../Navbar/Navbar';
 
 const Productview = () => {
   const navigate = useNavigate();
@@ -158,7 +159,7 @@ const Productview = () => {
 
   return (
     <>
-   
+      <Navbar/>
       <div className='productview-con'>
          <div className='productview-main-con'>
             <div className='productview-main-img-con'>

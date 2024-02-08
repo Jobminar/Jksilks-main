@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Favourites.css'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
+import Navbar from '../Navbar/Navbar';
 
 const Favorites = () => {
   const [favoritesData, setFavoritesData] = useState([]);
@@ -72,6 +73,7 @@ const Favorites = () => {
 
   return (
     <>
+    <Navbar/>
     <div>
       <h2>Favorites</h2>
       {loading ? (

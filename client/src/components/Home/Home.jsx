@@ -10,11 +10,13 @@ import bestseller2 from "./images/Frame 226.png";
 import bestseller3 from "./images/Frame 29.png";
 import bestseller4 from "./images/Frame 223.png";
 import ratings from "./images/ratings.png";
+import Navbar from "../Navbar/Navbar";
 
 const Home = () => {
   const navigate = useNavigate();
   return (
     <>
+      <Navbar/>
       <div className="home-con">
         <div className="main-img">
           <img src={mainimg} alt="mainimg" />

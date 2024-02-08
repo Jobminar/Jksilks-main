@@ -4,6 +4,7 @@ import './shoppingcart.css';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 const ShoppingCart = () => {
   const navigate = useNavigate()
@@ -151,6 +152,7 @@ const handleUpdateQuantity = (itemId, action) => {
               <p>{JSON.stringify(items, null, 2)}</p>
       
         </ul> */}
+      <Navbar/>
       <div className='shoppingCart-con'>
       <div className='shoppingcart-main-con'>
         <h2>Your Shopping Cart</h2>

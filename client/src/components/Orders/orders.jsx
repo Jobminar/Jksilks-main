@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './orders.css';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 const Ordersummary = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const Ordersummary = () => {
 
   return (
     <>
+    <Navbar/>
       <ul>
          
          <p>{JSON.stringify(cartDataid, null, 2)}</p>

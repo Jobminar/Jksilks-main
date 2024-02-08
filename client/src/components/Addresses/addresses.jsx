@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import './addresses.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 const Address = () => {
   const navigate = useNavigate()
@@ -219,6 +220,7 @@ const Address = () => {
 
   return (
     <>
+    <Navbar/>
      {/* get the addresses */}
      <div className='getaddresses'>
      {data && data.map((item, index) => (
