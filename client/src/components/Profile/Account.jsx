@@ -14,6 +14,7 @@ import PreviousOrders from "./PreviousOrder";
 import UserOrders from "./UserOrder";
 import { MdClose, MdHistory, MdShoppingCart } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import Navbar from "../Navbar/Navbar";
 
 const Account = () => {
   const [showPreviousOrders, setShowPreviousOrders] = useState(false);
@@ -59,6 +60,8 @@ const Account = () => {
     console.log("Edit");
   };
   return (
+    <>
+    <Navbar/>
     <Container maxWidth="md" style={{ marginTop: "5%" }}>
       <Typography
         variant="h2"
@@ -184,6 +187,7 @@ const Account = () => {
         </Card>
       )}
     </Container>
+    </>
   );
 };
 
