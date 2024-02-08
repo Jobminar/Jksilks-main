@@ -4,12 +4,14 @@ import './shoppingcart.css';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 
 const ShoppingCart = () => {
   const navigate = useNavigate()
   const [cartData, setCartData] = useState([]);
   const [cartLength, setCartLength] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+
 
   useEffect(() => {
     // Fetch data from the API
@@ -127,6 +129,22 @@ const handleUpdateQuantity = (itemId, action) => {
     sessionStorage.setItem('cartLength', cartLength.toString());
   }, [cartLength]);
 
+  // caluclate total amount
+
+  useEffect(() => {
+    // Calculate total amount whenever cartData changes
+    const calculatedTotalAmount = cartData.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+
+    setTotalAmount(calculatedTotalAmount);
+
+    sessionStorage.setItem('totalAmount', calculatedTotalAmount.toString());
+    
+  }, [cartData]);
+
+
+
   return (
     <>
        {/* <ul>
@@ -134,6 +152,7 @@ const handleUpdateQuantity = (itemId, action) => {
               <p>{JSON.stringify(items, null, 2)}</p>
       
         </ul> */}
+      <Navbar/>
       <div className='shoppingCart-con'>
       <div className='shoppingcart-main-con'>
         <h2>Your Shopping Cart</h2>

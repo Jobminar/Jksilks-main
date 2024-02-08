@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../semikanchipattu/semikanchipattu.css'
+import Navbar from '../../Navbar/Navbar';
 
 const Purekanchipattu = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const Purekanchipattu = () => {
     <>
      {/* <p>Inventory Data</p>
          <pre>{JSON.stringify(inventoryData, null, 2)}</pre> */}
+         <Navbar/>
       <div className='saree-con'>
         
       <h1 className='head'>Pure Kanchi Pattu</h1>

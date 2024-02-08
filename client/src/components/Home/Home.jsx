@@ -10,11 +10,13 @@ import bestseller2 from "./images/Frame 226.png";
 import bestseller3 from "./images/Frame 29.png";
 import bestseller4 from "./images/Frame 223.png";
 import ratings from "./images/ratings.png";
+import Navbar from "../Navbar/Navbar";
 
 const Home = () => {
   const navigate = useNavigate();
   return (
     <>
+      <Navbar/>
       <div className="home-con">
         <div className="main-img">
           <img src={mainimg} alt="mainimg" />
@@ -23,7 +25,10 @@ const Home = () => {
         <div className="new-arrivals">
           <div className="headding">
             <h1>New Arrivals</h1>
+            <div>
             <img src={line} alt="line" />
+            </div>
+            
           </div>
           <div className="newarrivals-main-section">
             <div className="handloomes-section">
@@ -31,9 +36,9 @@ const Home = () => {
             </div>
             <div
               className="newarrivals-main-con"
-              onClick={() => {
-                navigate("/addtocart");
-              }}
+              // onClick={() => {
+              //   navigate("/addtocart");
+              // }}
             >
               {Homedata.map((item, index) => (
                 <div key={index}>
@@ -61,7 +66,10 @@ const Home = () => {
         <div className="Best-sellers-con">
           <div className="headding">
             <h1>Best Sellers</h1>
-            <img src={line} alt="line" />
+            <div>
+              <img src={line} alt="line" /> 
+            </div>
+         
           </div>
           <div className="best-sellers">
             <div className="best-sellers-sub">

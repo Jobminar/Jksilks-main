@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Favourites.css'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import axios from 'axios';
+import Navbar from '../Navbar/Navbar';
 
 const Favorites = () => {
   const [favoritesData, setFavoritesData] = useState([]);
@@ -72,6 +73,7 @@ const Favorites = () => {
 
   return (
     <>
+    <Navbar/>
     <div>
       <h2>Favorites</h2>
       {loading ? (
@@ -84,11 +86,17 @@ const Favorites = () => {
                 <div className='fav-image'> 
                    <img src={`data:image/png;base64, ${item.itemImage1}`} alt={`Item ${item.itemname}`} />
                 </div>
-                <p>{item.itemname}</p>
-                <p>{item.price}</p>
-                <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
-                  <DeleteOutlinedIcon />
+                <div className='fav-content'>
+                  <div>
+                  <p>{item.itemname}</p>
+                  <p>{item.price}</p>
+                  </div>
+                
+                  <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
+                    <DeleteOutlinedIcon />
+                  </div>
                 </div>
+              
               </div>
               {/* Add more details or styling as needed */}
             </div>

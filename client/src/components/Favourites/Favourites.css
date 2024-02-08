@@ -1,10 +1,16 @@
 .fav-main-con{
   /* border: 1px solid black; */
   display: flex;
+  flex-wrap: wrap;
   justify-content: left;
   gap: 2rem;
   padding: 2rem  4rem;
   
+}
+.fav-content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .fav-sub-con{
   /* border: 1px solid black; */

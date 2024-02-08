@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './semikanchipattu.css'
+import Navbar from '../../Navbar/Navbar';
 
 const Semikanchipattu = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const Semikanchipattu = () => {
     <>
      {/* <p>Inventory Data</p>
          <pre>{JSON.stringify(inventoryData, null, 2)}</pre> */}
+      <Navbar/>
       <div className='saree-con'>
         <h1 className='head'>Semi Kanchi Pattu</h1>
         <p>It is also known as Kanchipuram Blended soft Silk Sarees and Kanjivaram Mixed Silk Sarees. Kanchipuram Semi Silk sarees are lightweight and comfortable as pure silk. Semi silk is as soft as cotton and as bright as silk and as breathable as wool.</p>

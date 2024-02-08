@@ -23,11 +23,29 @@ const Navbar = () => {
   };
 
   const handleWishlistClick = () => {
-    navigate("/favourite");
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user && user.user._id;
+    if (userId && userId.length > 1) {
+      // Navigate to the wishlist path
+      navigate("/favourite");
+    } else {
+      // Display an alert
+      alert('Please login before going to favorites.');
+    }
+   
   };
 
   const handleCartClick = () => {
-    navigate("/cart");
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userId = user && user.user._id;
+    if (userId && userId.length > 1) {
+      // Navigate to the wishlist path
+      navigate("/cart");
+    } else {
+      // Display an alert
+      alert('Please login before going to Cart.');
+    }
+   
   };
 
   const handleProfileClick = () => {
@@ -37,11 +55,22 @@ const Navbar = () => {
 
   var favoritesLengthString = sessionStorage.getItem('favoritesLength');
   var favoritesLength = parseInt(favoritesLengthString);
+  if (isNaN(favoritesLength)) {
+    // If favoritesLength is NaN, set it to 0
+    favoritesLength = 0;
+  }
   console.log(favoritesLength);
+  
 
   
   var cartLengthString = sessionStorage.getItem('cartLength');
   var cartLength = parseInt(cartLengthString);
+  
+  if (isNaN(cartLength)) {
+    // If cartLength is NaN, set it to 0
+    cartLength = 0;
+  }
+  
   console.log(cartLength);
 
 
