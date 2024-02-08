@@ -84,11 +84,17 @@ const Favorites = () => {
                 <div className='fav-image'> 
                    <img src={`data:image/png;base64, ${item.itemImage1}`} alt={`Item ${item.itemname}`} />
                 </div>
-                <p>{item.itemname}</p>
-                <p>{item.price}</p>
-                <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
-                  <DeleteOutlinedIcon />
+                <div className='fav-content'>
+                  <div>
+                  <p>{item.itemname}</p>
+                  <p>{item.price}</p>
+                  </div>
+                
+                  <div className='delete-icon' onClick={() => handleItemDelete(item._id)}>
+                    <DeleteOutlinedIcon />
+                  </div>
                 </div>
+              
               </div>
               {/* Add more details or styling as needed */}
             </div>

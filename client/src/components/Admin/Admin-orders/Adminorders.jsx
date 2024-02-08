@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Adminheader from "../adminheader";
+import './Adminorders.css'
 import {
   Container,
   Typography,
@@ -48,7 +49,7 @@ const Adminorders = () => {
           Array.isArray(ordersResponse.data.orders) &&
           ordersResponse.data.orders.length > 0
         ) {
-          const firstOrder = ordersResponse.data.orders[0];
+          const firstOrder = ordersResponse.data.orders;
           setUserId(firstOrder.userId);
           setOrdersData(ordersResponse.data.orders);
 
@@ -106,200 +107,205 @@ const Adminorders = () => {
     }
   }, [ordersData]);
 
-  const handleCancelOrder = (orderId) => {
-    console.log(`Cancel order with ID: ${orderId}`);
-  };
+  // const handleCancelOrder = (orderId) => {
+  //   console.log(`Cancel order with ID: ${orderId}`);
+  // };
 
-  const handleRefundOrder = (orderId) => {
-    console.log(`Refund order with ID: ${orderId}`);
-  };
+  // const handleRefundOrder = (orderId) => {
+  //   console.log(`Refund order with ID: ${orderId}`);
+  // };
 
-  const handleUpdateOrder = (orderId) => {
-    console.log(`Update order with ID: ${orderId}`);
-  };
+  // const handleUpdateOrder = (orderId) => {
+  //   console.log(`Update order with ID: ${orderId}`);
+  // };
 
   return (
     <>
       <Adminheader />
-      <Container sx={{ mt: 4 }}>
-        <Typography variant="h2" align="center" sx={{ mb: 4 }}>
-          User Orders
-        </Typography>
-
-        {userData && (
-          <Card sx={{ mb: 4 }}>
-            <CardContent>
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                User Details
-              </Typography>
-              <Typography>
-                <strong>Full Name:</strong> {userData.fullName}
-              </Typography>
-              <Typography>
-                <strong>Mobile Number:</strong> {userData.mobileNumber}
-              </Typography>
-              <Typography>
-                <strong>Email:</strong> {userData.email}
-              </Typography>
-              <Typography>
-                <strong>Gender:</strong> {userData.gender}
-              </Typography>
-              <Typography>
-                <strong>Date of Birth:</strong>{" "}
-                {new Date(userData.dateOfBirth.$date).toLocaleDateString()}
-              </Typography>
-              <Typography>
-                <strong>Location:</strong> {userData.location}
-              </Typography>
-              <Typography>
-                <strong>Alternate Number:</strong>{" "}
-                {userData.alternateNumber || "N/A"}
-              </Typography>
-            </CardContent>
-          </Card>
-        )}
-
+      <div className="orders-main-con">
+       <div className="user-address-details">
+       <div className="orders-user-con">
+          {userData && (
+          
+              <CardContent className="orders-user-sub-con">
+                <Typography variant="h3" sx={{ mb: 2 }}>
+                  User Details
+                </Typography>
+                <Typography>
+                  <strong>Full Name:</strong> {userData.fullName}
+                </Typography>
+                <Typography>
+                  <strong>Mobile Number:</strong> {userData.mobileNumber}
+                </Typography>
+                <Typography>
+                  <strong>Email:</strong> {userData.email}
+                </Typography>
+                <Typography>
+                  <strong>Gender:</strong> {userData.gender}
+                </Typography>
+                <Typography>
+                  <strong>Date of Birth:</strong>{" "}
+                  {new Date(userData.dateOfBirth.$date).toLocaleDateString()}
+                </Typography>
+                <Typography>
+                  <strong>Location:</strong> {userData.location}
+                </Typography>
+                <Typography>
+                  <strong>Alternate Number:</strong>{" "}
+                  {userData.alternateNumber || "N/A"}
+                </Typography>
+              </CardContent>
+          )}
+        </div>
+        <div className="orders-address-main-con">
         {addressResponse && (
-          <Card sx={{ mb: 4 }}>
-            <CardContent>
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Address Details
-              </Typography>
-              <Typography>
-                <strong>User Name:</strong> {addressResponse.userName}
-              </Typography>
-              <Typography>
-                <strong>Mobile Number:</strong> {addressResponse.mobileNumber}
-              </Typography>
-              <Typography>
-                <strong>House Number:</strong> {addressResponse.houseNumber}
-              </Typography>
-              <Typography>
-                <strong>Street:</strong> {addressResponse.street}
-              </Typography>
-              <Typography>
-                <strong>Landmark:</strong> {addressResponse.landmark}
-              </Typography>
-              <Typography>
-                <strong>Pincode:</strong> {addressResponse.pincode}
-              </Typography>
-              <Typography>
-                <strong>State:</strong> {addressResponse.state}
-              </Typography>
-            </CardContent>
-          </Card>
-        )}
+            <Card sx={{ mb: 4 }}>
+              <CardContent className="orders-address-sub-con">
+                <Typography variant="h3" sx={{ mb: 2 }}>
+                  Address Details
+                </Typography>
+                <Typography>
+                  <strong>User Name:</strong> {addressResponse.userName}
+                </Typography>
+                <Typography>
+                  <strong>Mobile Number:</strong> {addressResponse.mobileNumber}
+                </Typography>
+                <Typography>
+                  <strong>House Number:</strong> {addressResponse.houseNumber}
+                </Typography>
+                <Typography>
+                  <strong>Street:</strong> {addressResponse.street}
+                </Typography>
+                <Typography>
+                  <strong>Landmark:</strong> {addressResponse.landmark}
+                </Typography>
+                <Typography>
+                  <strong>Pincode:</strong> {addressResponse.pincode}
+                </Typography>
+                <Typography>
+                  <strong>State:</strong> {addressResponse.state}
+                </Typography>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+       </div>
+        
+        <div className="orders-order-main-con">
+          {ordersData.map((orderGroup) => (
+              <Card key={orderGroup._id} sx={{ mb: 4 }}>
+                <CardContent className="orders-order-sub-con">
+                  {/* <Typography variant="h3" sx={{ mb: 2 }}>
+                    Order Group ID: {orderGroup._id}
+                  </Typography> */}
+                  <ul>
+                    {Array.isArray(orderGroup.orders) &&
+                      orderGroup.orders.map((order) => (
+                        <li key={order._id} sx={{ mb: 2 }}>
+                          {/* <Typography variant="h5" sx={{ mb: 2 }}>
+                            Order ID: {order._id}
+                          </Typography>
+                          <Typography>
+                            <strong>Address ID:</strong> {order.addressId}
+                          </Typography> */}
+                          {/* {addressResponse && (
+                            <div>
+                              <Typography variant="h6" sx={{ mb: 1 }}>
+                                Address Details
+                              </Typography>
+                              <Typography>
+                                <strong>House Number:</strong>{" "}
+                                {addressResponse.houseNumber}
+                              </Typography>
+                              <Typography>
+                                <strong>Street:</strong> {addressResponse.street}
+                              </Typography>
+                              <Typography>
+                                <strong>Landmark:</strong>{" "}
+                                {addressResponse.landmark}
+                              </Typography>
+                              <Typography>
+                                <strong>Pincode:</strong> {addressResponse.pincode}
+                              </Typography>
+                              <Typography>
+                                <strong>State:</strong> {addressResponse.state}
+                              </Typography>
+                            </div>
+                          )} */}
+                          {/* <Typography>
+                            <strong>Total Amount:</strong> {order.totalAmount}
+                          </Typography>
+                          <Typography>
+                            <strong>Payment:</strong> {order.payment}
+                          </Typography>
+                          <Typography>
+                            <strong>Order Status:</strong> {order.orderStatus}
+                          </Typography> */}
+                          <div className="order-details-con">
+                            <strong>Cart IDs:</strong>{" "}
+                            {order.cartIds.map((cartId) => (
+                              <div key={cartId} sx={{ display: "block" }} className="order-details-sub-con">
+                                <img
+                                  src={`data:image/png;base64,${cartDetails[cartId]?.itemImage1}`}
+                                  alt={`Item ${cartId}`}
+                                  style={{ maxWidth: "100px", marginBottom: "8px" }}
+                                />
+                                <div>
+                                    <div>Category:  {cartDetails[cartId]?.category || "N/A"}</div>
+                                    <div>Item Name:  {cartDetails[cartId]?.itemname || "N/A"}</div>
+                                </div>
+                                <div>
+                                   <div>Length:  {cartDetails[cartId]?.length || "N/A"}</div>
+                                    <div>Washcare:  {cartDetails[cartId]?.washCare || "N/A"}</div>
+                                    <div>Fabric:  {cartDetails[cartId]?.fabric || "N/A"}</div>
 
-        {ordersData.map((orderGroup) => (
-          <Card key={orderGroup._id} sx={{ mb: 4 }}>
-            <CardContent>
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Order Group ID: {orderGroup._id}
-              </Typography>
-              <ul>
-                {Array.isArray(orderGroup.orders) &&
-                  orderGroup.orders.map((order) => (
-                    <li key={order._id} sx={{ mb: 2 }}>
-                      <Typography variant="h5" sx={{ mb: 2 }}>
-                        Order ID: {order._id}
-                      </Typography>
-                      <Typography>
-                        <strong>Address ID:</strong> {order.addressId}
-                      </Typography>
-                      {addressResponse && (
-                        <div>
-                          <Typography variant="h6" sx={{ mb: 1 }}>
-                            Address Details
-                          </Typography>
-                          <Typography>
-                            <strong>House Number:</strong>{" "}
-                            {addressResponse.houseNumber}
-                          </Typography>
-                          <Typography>
-                            <strong>Street:</strong> {addressResponse.street}
-                          </Typography>
-                          <Typography>
-                            <strong>Landmark:</strong>{" "}
-                            {addressResponse.landmark}
-                          </Typography>
-                          <Typography>
-                            <strong>Pincode:</strong> {addressResponse.pincode}
-                          </Typography>
-                          <Typography>
-                            <strong>State:</strong> {addressResponse.state}
-                          </Typography>
-                        </div>
-                      )}
-                      <Typography>
-                        <strong>Total Amount:</strong> {order.totalAmount}
-                      </Typography>
-                      <Typography>
-                        <strong>Payment:</strong> {order.payment}
-                      </Typography>
-                      <Typography>
-                        <strong>Order Status:</strong> {order.orderStatus}
-                      </Typography>
-                      <Typography>
-                        <strong>Cart IDs:</strong>{" "}
-                        {order.cartIds.map((cartId) => (
-                          <span key={cartId} sx={{ display: "block" }}>
-                            {cartId} - {cartDetails[cartId]?.itemname || "N/A"}
-                            <br />
-                            <strong>Category:</strong>{" "}
-                            {cartDetails[cartId]?.category || "N/A"}
-                            <br />
-                            <strong>Code:</strong>{" "}
-                            {cartDetails[cartId]?.code || "N/A"}
-                            <br />
-                            <strong>Description:</strong>{" "}
-                            {cartDetails[cartId]?.description || "N/A"}
-                            <br />
-                            <strong>Fabric:</strong>{" "}
-                            {cartDetails[cartId]?.fabric || "N/A"}
-                            <br />
-                            <strong>Item ID:</strong>{" "}
-                            {cartDetails[cartId]?.itemId || "N/A"}
-                            <br />
-                            <img
-                              src={`data:image/png;base64,${cartDetails[cartId]?.itemImage1}`}
-                              alt={`Item ${cartId}`}
-                              style={{ maxWidth: "100px", marginBottom: "8px" }}
-                            />
-                          </span>
-                        ))}
-                      </Typography>
-                      <div>
-                        <Button
-                          variant="contained"
-                          color="error"
-                          sx={{ marginRight: 1 }}
-                          onClick={() => handleCancelOrder(order._id)}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="warning"
-                          sx={{ marginRight: 1 }}
-                          onClick={() => handleRefundOrder(order._id)}
-                        >
-                          Refund
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleUpdateOrder(order._id)}
-                        >
-                          Update
-                        </Button>
-                      </div>
-                    </li>
-                  ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </Container>
+                                </div>
+                                <div>
+                                  <div>Code:  {cartDetails[cartId]?.code || "N/A"}</div>
+                                  <div>Description: {cartDetails[cartId]?.description || "N/A"}</div>
+                                  <div>Item ID: {cartDetails[cartId]?.itemId || "N/A"}</div>
+                                </div>
+                               
+                                
+                              </div>
+                            ))}
+                          </div>
+                          <div>
+                            <Button
+                              variant="contained"
+                              color="error"
+                              sx={{ marginRight: 1 }}
+                              onClick={() => handleCancelOrder(order._id)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="warning"
+                              sx={{ marginRight: 1 }}
+                              onClick={() => handleRefundOrder(order._id)}
+                            >
+                              Refund
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => handleUpdateOrder(order._id)}
+                            >
+                              Update
+                            </Button>
+                          </div>
+                        </li>
+                      ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+        </div>
+      </div>
+    
+
+
     </>
   );
 };

@@ -1,0 +1,19 @@
+.orders-main-con{
+    display: flex;
+    flex-direction: column;
+}
+.user-address-details{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.order-details-con{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.order-details-sub-con{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

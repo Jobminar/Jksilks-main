@@ -13,6 +13,7 @@ import Purekanchi from './tabs/Purekanchi';
 import Purekanjivaram from './tabs/Pure-kanjivaram';
 import ExclusiveBridalwear from './tabs/Exclusive-Bridal-wear';
 import Offerzone from './tabs/Offerzone';
+import Newdrops from './tabs/Newdrops';
 
 
 
@@ -34,6 +35,8 @@ const Product = () => {
         return <Purekanjivaram />;
       case 'exclusivebridalwear':
         return <ExclusiveBridalwear />;
+      case 'newdrops':
+        return <Newdrops/>;
       case 'offerzone':
         return <Offerzone />;
       default:
@@ -90,6 +93,13 @@ const Product = () => {
         >
           {/* <img src={battery} alt="" width={30}/> */}
           Exclusive Bridal wear
+        </div>
+        <div
+          className={`tab ${activeTab === 'newdrops' && 'active'}`}
+          onClick={() => handleTabClick('newdrops')}
+        >
+          {/* <img src={battery} alt="" width={30}/> */}
+          New Drops
         </div>
         <div
           className={`tab ${activeTab === 'offerzone' && 'active'}`}

@@ -113,6 +113,7 @@ const Inventory = () => {
             <MenuItem value="pureKanchiPattu">Pure kanchi pattu</MenuItem>
             <MenuItem value="pureKanjivaramSilk">Pure kanjivaram silk</MenuItem>
             <MenuItem value="exclusiveBridalWear">Exclusive Bridal wear</MenuItem>
+            <MenuItem value="newDrops">New Drops</MenuItem>
             <MenuItem value="offerZone">Offer zone</MenuItem>
             
           </Select>

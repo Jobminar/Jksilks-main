@@ -11,6 +11,7 @@ const ShoppingCart = () => {
   const [cartLength, setCartLength] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
 
+
   useEffect(() => {
     // Fetch data from the API
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -126,6 +127,22 @@ const handleUpdateQuantity = (itemId, action) => {
   useEffect(() => {
     sessionStorage.setItem('cartLength', cartLength.toString());
   }, [cartLength]);
+
+  // caluclate total amount
+
+  useEffect(() => {
+    // Calculate total amount whenever cartData changes
+    const calculatedTotalAmount = cartData.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+
+    setTotalAmount(calculatedTotalAmount);
+
+    sessionStorage.setItem('totalAmount', calculatedTotalAmount.toString());
+    
+  }, [cartData]);
+
+
 
   return (
     <>

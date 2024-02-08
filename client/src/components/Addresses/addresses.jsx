@@ -54,7 +54,8 @@ const Address = () => {
         // Post the data to the backend
         const user = JSON.parse(sessionStorage.getItem("user"));
         const userId = user && user.user._id;
-    
+
+
         const dataToSend = {
           userId: userId,
           userName: formData.name,
@@ -182,12 +183,14 @@ const Address = () => {
       // Fetch data from the API
       const user = JSON.parse(sessionStorage.getItem("user"));
       const userId = user && user.user._id;
-    
+                // get total amount
+      const totalAmount = sessionStorage.getItem('totalAmount');
+      console.log(totalAmount)
       const orderData = {
         userId: userId,
         addressId: "65c09202a333bf6b3e924dbf",
         cartIds: cartDataid,
-        totalAmount: 50000,
+        totalAmount: totalAmount,
         payment: "yes",
         orderStatus: "pending",
       };
@@ -212,6 +215,7 @@ const Address = () => {
       }
     };
 
+ 
 
   return (
     <>
