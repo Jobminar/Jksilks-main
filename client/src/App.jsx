@@ -24,7 +24,7 @@ import Productview from "./components/Sares/Productview/productview";
 import Orders from "./components/Orders/orders";
 import Address from "./components/Addresses/addresses";
 import Ordersummary from "./components/Orders/orders";
-import profile from './assets/Whatsapp.jpeg'
+import profile from './assets/WhatsApp.jpeg'
 import CreateOrderForm from "./components/Orders/orders";
 import Adminorders from "./components/Admin/Admin-orders/Adminorders";
 import { FloatingWhatsApp } from "react-floating-whatsapp";
