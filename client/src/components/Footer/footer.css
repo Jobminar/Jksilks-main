@@ -6,7 +6,7 @@
     padding: 1rem 4rem;
     /* border: 1px solid black; */
     display: grid;
-    grid-template-columns: 23% 23% 23% 31%;
+    grid-template-columns: 23% 25% 25% 25%;
     justify-content: space-around;
     background-color:  rgba(244, 216, 118, 1);
 
@@ -79,8 +79,9 @@
     width: 15rem;
     height: 2rem;
 }
-
-
+.quicklinks div:hover{
+    cursor: pointer;
+}
 @media screen and (min-width: 360px) and (max-width: 600px){
     .footer-con{
         /* margin: 1rem 2rem; */

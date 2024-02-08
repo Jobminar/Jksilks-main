@@ -107,7 +107,6 @@ const Address = () => {
           console.error('Error fetching data:', error);
         }
       };
-
       fetchData();
     }, [userId]);
 
@@ -205,7 +204,7 @@ const Address = () => {
         if (response.status==201) {
           console.log("Order successfully created:", response.data);
           alert("Order added successfully");
-          navigate("/ordersummary");
+          navigate("/accounts");
         } else {
           console.error("Failed to create order. Status:", response.status);
           alert("Order failed. Please try again later.");
