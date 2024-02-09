@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './orders.css';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../Navbar/Navbar';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./orders.css";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../Navbar/Navbar";
 
 const Ordersummary = () => {
   const navigate = useNavigate();
@@ -16,14 +16,16 @@ const Ordersummary = () => {
 
     if (userId) {
       // Make a GET request to the /getCartByUserId/:userId endpoint
-      fetch(`https://jk-skills.onrender.com/getCartByUserId/${userId}`)
+      fetch(`https://server.sharetravel.in/getCartByUserId/${userId}`)
         .then((response) => {
           // Check if the request was successful (status code 2xx)
           if (response.ok) {
             return response.json();
           } else {
             // Handle errors for unsuccessful requests
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            throw new Error(
+              `Error: ${response.status} - ${response.statusText}`
+            );
           }
         })
         .then((cartItems) => {
@@ -31,7 +33,7 @@ const Ordersummary = () => {
           console.log(cartItems);
 
           // Extracting _id from cartItems and storing in cartItemid state
-          const cartItemIds = cartItems.map(item => item._id);
+          const cartItemIds = cartItems.map((item) => item._id);
           setCartDataid(cartItemIds);
         })
         .catch((error) => {
@@ -46,12 +48,10 @@ const Ordersummary = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <ul>
-         
-         <p>{JSON.stringify(cartDataid, null, 2)}</p>
- 
-   </ul>
+        <p>{JSON.stringify(cartDataid, null, 2)}</p>
+      </ul>
     </>
   );
 };

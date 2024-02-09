@@ -13,14 +13,19 @@ import {
 } from "@mui/material";
 
 const PreviousOrders = () => {
-  const [userId, setUserId] = useState("65c46d798c59155ffe5a2b2d");
+  // Get userId from sessionStorage
+  const userIdFromSessionStorage = sessionStorage.getItem("user")
+    ? JSON.parse(sessionStorage.getItem("user")).user?._id
+    : null;
+
+  const [userId, setUserId] = useState(userIdFromSessionStorage);
   const [currentDate, setCurrentDate] = useState(new Date().toISOString());
   const [previousOrders, setPreviousOrders] = useState([]);
 
   const getPreviousOrders = async () => {
     try {
       const response = await axios.post(
-        "https://jk-skills.onrender.com/orders/previous",
+        "https://server.sharetravel.in/orders/previous",
         { userId, currentDate }
       );
 

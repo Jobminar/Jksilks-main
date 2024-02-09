@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       // Make a POST request to the /login endpoint
-      const response = await fetch("https://jk-skills.onrender.com/login", {
+      const response = await fetch("https://server.sharetravel.in/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,9 +40,9 @@ export default function Login() {
 
         // Set user object in session storage
         sessionStorage.setItem("user", JSON.stringify(user));
-        
+
         console.log("Login successful");
-        navigate('/')
+        navigate("/");
         // Optionally, you can redirect the user to another page after successful login
         navigate("/");
       } else {

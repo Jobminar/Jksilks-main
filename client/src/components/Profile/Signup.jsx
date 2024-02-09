@@ -26,7 +26,7 @@ export default function Signup() {
 
     try {
       // Make a POST request to the /signup endpoint
-      const response = await fetch("https://jk-skills.onrender.com/signup", {
+      const response = await fetch("https://server.sharetravel.in/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

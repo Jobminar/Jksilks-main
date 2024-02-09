@@ -19,19 +19,19 @@ const OrdersPopup = ({ userId, addressId, cartId, onClose }) => {
       try {
         // Fetch user data
         const userResponse = await axios.get(
-          `https://jk-skills.onrender.com/users/${userId}`
+          `https://server.sharetravel.in/users/${userId}`
         );
         setUserData(userResponse.data);
 
         // Fetch address data
         const addressResponse = await axios.get(
-          `https://jk-skills.onrender.com/addresses/${addressId}`
+          `https://server.sharetravel.in/addresses/${addressId}`
         );
         setAddressData(addressResponse.data);
 
         // Fetch cart data
         const cartResponse = await axios.get(
-          `https://jk-skills.onrender.com/carts/${cartId}`
+          `https://server.sharetravel.in/carts/${cartId}`
         );
         setCartData(cartResponse.data);
       } catch (error) {

@@ -26,7 +26,7 @@ const Adminorders = () => {
     const fetchData = async () => {
       try {
         const ordersResponse = await axios.get(
-          "https://jk-skills.onrender.com/orders/all"
+          "https://server.sharetravel.in/orders/all"
         );
 
         console.log("Orders Response:", ordersResponse.data);
