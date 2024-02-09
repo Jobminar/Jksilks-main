@@ -9,7 +9,7 @@ const Purekanjivaram = () => {
   const [inventoryData, setInventoryData] = useState([]);
 
   useEffect(() => {
-    const apiUrl = 'https://jk-skills.onrender.com/inventory';
+    const apiUrl = 'https://server.sharetravel.in/inventory';
   
     axios.get(apiUrl)
       .then(response => {

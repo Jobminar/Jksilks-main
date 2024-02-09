@@ -10,7 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 import './addresses.css'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 
 const Address = () => {
@@ -179,29 +179,38 @@ const Address = () => {
     // handle delivery
 
 
-    const handleDelivery = async () => {
+    const handleDelivery = async (addressid) => {
       // Fetch data from the API
       const user = JSON.parse(sessionStorage.getItem("user"));
       const userId = user && user.user._id;
-                // get total amount
+    
+      // Get total amount
       const totalAmount = sessionStorage.getItem('totalAmount');
-      console.log(totalAmount)
+    
+      // Extract relevant data from the addressid object
+      const simplifiedAddress = {
+        street: addressid.street,
+        // Include other necessary properties...
+      };
+    
       const orderData = {
         userId: userId,
-        addressId: "65c09202a333bf6b3e924dbf",
+        addressId: simplifiedAddress,
         cartIds: cartDataid,
         totalAmount: totalAmount,
         payment: "yes",
         orderStatus: "pending",
       };
+    
       console.log(orderData);
+    
       try {
         const response = await axios.post(
           "https://jk-skills.onrender.com/create-order",
           orderData
         );
     
-        if (response.status==201) {
+        if (response.status === 201) {
           console.log("Order successfully created:", response.data);
           alert("Order added successfully");
           navigate("/accounts");
@@ -214,6 +223,8 @@ const Address = () => {
         alert("Error creating order. Please try again later.");
       }
     };
+    
+    
 
  
 
@@ -231,13 +242,14 @@ const Address = () => {
       <p>{item.pincode}</p>
       <p>{item.state}</p>
       <p>Phone number: {item.mobileNumber}</p>
+      <p>id : {item._id}</p>
       <div className='deliver-add'>
         <button onClick={handleDelivery}>
             Deliver to this address
         </button>
       </div>
       <div className='edit-add'>
-        <button onClick={handleDelivery}>
+        <button onClick={()=>{handleDelivery(item._id)}}>
             Delete this address
         </button>
       </div>
