@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       // Make a POST request to the /login endpoint
-      const response = await fetch("https://server.sharetravel.in/login", {
+      const response = await fetch("http://localhost:2000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,9 +42,15 @@ export default function Login() {
         sessionStorage.setItem("user", JSON.stringify(user));
 
         console.log("Login successful");
-        navigate("/");
-        // Optionally, you can redirect the user to another page after successful login
-        navigate("/");
+
+        // Check if the user is an admin
+        if (user.user === "admin") {
+          // If admin, navigate to /adminheader
+          navigate("/adminheader");
+        } else {
+          // If regular user, navigate to /
+          navigate("/");
+        }
       } else {
         // Handle errors for unsuccessful requests
         const data = await response.json();
