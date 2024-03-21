@@ -25,7 +25,7 @@ const PreviousOrders = () => {
   const getPreviousOrders = async () => {
     try {
       const response = await axios.post(
-        "https://server.sharetravel.in/orders/previous",
+        "https://jk-skills.onrender.com/orders/previous",
         { userId, currentDate }
       );
 

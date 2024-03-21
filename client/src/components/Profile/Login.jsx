@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       // Make a POST request to the /login endpoint
-      const response = await fetch("https://server.sharetravel.in/login", {
+      const response = await fetch("https://jk-skills.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

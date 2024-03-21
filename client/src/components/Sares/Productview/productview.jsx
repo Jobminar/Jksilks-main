@@ -77,7 +77,7 @@ const Productview = () => {
 
       // Make a POST request to your backend API
       axios
-        .post("https://server.sharetravel.in/add-to-cart", dataToSend)
+        .post("https://jk-skills.onrender.com/add-to-cart", dataToSend)
         .then((response) => {
           // Handle success (e.g., show a success message)
           alert(`Successfully added ${quantity} items to the cart!`);
@@ -133,7 +133,7 @@ const Productview = () => {
     // Make a POST request to your backend API
     // Make a POST request to your backend API
     axios
-      .post("https://server.sharetravel.in/wishlist/add", dataToSendfav)
+      .post("https://jk-skills.onrender.com/wishlist/add", dataToSendfav)
       .then((response) => {
         // Handle success (e.g., show a success message)
         alert(`Successfully added ${quantity} items to the favorite!`);

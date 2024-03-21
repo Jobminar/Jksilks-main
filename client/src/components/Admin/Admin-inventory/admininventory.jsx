@@ -69,7 +69,7 @@ const Inventory = () => {
       }
 
       await axios.post(
-        "https://server.sharetravel.in/addItem",
+        "https://jk-skills.onrender.com/addItem",
         formDataToSend,
         {
           headers: {

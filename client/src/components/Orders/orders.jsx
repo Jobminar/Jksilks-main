@@ -16,7 +16,7 @@ const Ordersummary = () => {
 
     if (userId) {
       // Make a GET request to the /getCartByUserId/:userId endpoint
-      fetch(`https://server.sharetravel.in/getCartByUserId/${userId}`)
+      fetch(`https://jk-skills.onrender.com/getCartByUserId/${userId}`)
         .then((response) => {
           // Check if the request was successful (status code 2xx)
           if (response.ok) {

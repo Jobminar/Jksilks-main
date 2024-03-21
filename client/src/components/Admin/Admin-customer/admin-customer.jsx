@@ -9,7 +9,7 @@ const Admincustomer = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    fetch('https://server.sharetravel.in/users')
+    fetch('https://jk-skills.onrender.com/users')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching data:', error));

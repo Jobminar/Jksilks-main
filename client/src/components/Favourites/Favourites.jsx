@@ -16,7 +16,7 @@ const Favorites = () => {
 
     // Check if userId is available
     if (userId) {
-      const apiUrl = `https://server.sharetravel.in/wishlist/${userId}`;
+      const apiUrl = `https://jk-skills.onrender.com/wishlist/${userId}`;
 
       fetch(apiUrl)
         .then((response) => {
@@ -54,7 +54,7 @@ const Favorites = () => {
 
     // Make a DELETE request to your backend API
     axios
-      .delete("https://server.sharetravel.in/wishlist/delete", {
+      .delete("https://jk-skills.onrender.com/wishlist/delete", {
         data: dataToDelete,
       })
       .then((response) => {

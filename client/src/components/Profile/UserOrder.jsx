@@ -48,7 +48,7 @@ const UserOrders = () => {
           setUserId(storedUserId);
 
           const ordersResponse = await axios.get(
-            `https://server.sharetravel.in/orders/user/${storedUserId}`
+            `https://jk-skills.onrender.com/orders/user/${storedUserId}`
           );
 
           if (
@@ -96,7 +96,7 @@ const UserOrders = () => {
             console.log("this is addressId", addressId);
 
             const response = await axios.get(
-              `https://server.sharetravel.in/addresses/${addressId}`
+              `https://jk-skills.onrender.com/addresses/${addressId}`
             );
 
             setAddressResponse(response.data);
